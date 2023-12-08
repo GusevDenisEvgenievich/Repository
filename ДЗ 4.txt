@@ -1,0 +1,195 @@
+fun q1() {
+    Column (horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.Gray)){
+        Row (horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .height(60.dp)
+                .background(Color.DarkGray)
+                .fillMaxWidth()) {
+            Text(text = "Title",
+                textAlign = TextAlign.Center,
+                fontSize = 30.sp,
+                modifier = Modifier
+                    .fillMaxWidth())
+        }
+        Row (horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.Bottom,
+            modifier = Modifier
+                .height(190.dp)
+                .fillMaxWidth()){
+            Text(text = "", Modifier
+                .background(Color.Blue)
+                .size(110.dp))
+        }
+        Row (horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .height(100.dp)
+                .fillMaxWidth()){
+            Text(text = "", Modifier
+                .background(Color.Red)
+                .height(110.dp)
+                .width(130.dp))
+            Text(text = "", Modifier
+                .background(Color.Yellow)
+                .height(110.dp)
+                .width(130.dp))
+        }
+        Row (horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()){
+            Text(text = "", Modifier
+                .background(Color.Black)
+                .size(110.dp))
+        }
+        Row (horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.Bottom,
+            modifier = Modifier
+                .height(180.dp)
+                .fillMaxWidth()){
+            Text(text = "", Modifier
+                .background(Color.Green)
+                .size(110.dp))
+            Text(text = "", Modifier
+                .background(Color.Magenta)
+                .size(110.dp))
+        }
+        Text(text = "",
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .height(80.dp)
+                .fillMaxWidth()
+                .background(Color.Gray))
+        Row (horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.Bottom,
+            modifier = Modifier
+                .background(Color.DarkGray)
+                .height(60.dp)
+                .fillMaxWidth()) {
+            Column (verticalArrangement = Arrangement.Bottom){
+                Text(text = "1", Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color(98, 0, 238))
+                    .height(30.dp)
+                    .width(50.dp),
+                    color = Color.White,
+                    textAlign = TextAlign.Center)
+            }
+            Spacer(modifier = Modifier
+                .width(10.dp))
+            Column (verticalArrangement = Arrangement.Bottom){
+                Text(text = "Footer",
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Center)
+            }
+            Spacer(modifier = Modifier
+                .width(10.dp))
+            Column (verticalArrangement = Arrangement.Bottom){
+                Text(text = "2", modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color(98, 0, 238))
+                    .height(30.dp)
+                    .width(50.dp),
+                    color = Color.White,
+                    textAlign = TextAlign.Center)
+            }
+        }
+    }
+}
+
+fun 2() {
+    Column (){
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .background(Color(248, 187, 208))
+                .height(240.dp)
+                .fillMaxWidth()){
+            Column (verticalArrangement = Arrangement.Center){
+                Text(text = "Game",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 40.sp,
+                    color = Color.Blue,
+                    modifier = Modifier
+                        .fillMaxWidth())
+                Text(text = "from",
+                    textAlign = TextAlign.Center,
+                    fontSize = 40.sp,
+                    modifier = Modifier
+                        .fillMaxWidth())
+                Text(text = "FromSoftware",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 40.sp,
+                    color = Color.Blue,
+                    modifier = Modifier
+                        .fillMaxWidth())
+            }
+        }
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .background(Color(187, 222, 251))
+                .height(470.dp)
+                .fillMaxWidth()){
+            Column (verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .height(470.dp)
+                    .fillMaxWidth()) {
+                Image(painterResource(R.drawable.img),"",
+                    modifier = Modifier
+                        .height(50.dp)
+                        .fillMaxWidth())
+                Spacer(modifier = Modifier
+                    .size(10.dp))
+                Button(onClick = { }) {
+                    Text(text = "New Game",
+                        modifier = Modifier
+                            .height(30.dp))}
+                Spacer(modifier = Modifier
+                    .size(10.dp))
+                Button(onClick = { }) {
+                    Text(text = "Options",
+                        modifier = Modifier
+                            .height(30.dp))}
+                Spacer(modifier = Modifier
+                    .size(10.dp))
+                Row (verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    modifier = Modifier
+                        .fillMaxWidth()) {
+                    Button(onClick = { }) {
+                        Text(text = "Exit",
+                            modifier = Modifier
+                                .height(30.dp))}
+                    Button(onClick = { }) {
+                        Text(text = "Logout",
+                            modifier = Modifier
+                                .height(30.dp))}
+                }
+            }
+        }
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier
+                .background(Color(255, 224, 178))
+                .height(80.dp)
+                .fillMaxWidth()){
+            Image(painterResource(R.drawable.img_1),"",
+                modifier = Modifier
+                    .height(30.dp))
+            Button(onClick = { }) {
+                Text(text = "About",
+                    modifier = Modifier
+                        .height(30.dp))
+            }
+            Image(painterResource(R.drawable.img_2),"",
+                modifier = Modifier
+                    .height(30.dp))
+        }
+    }
+}
