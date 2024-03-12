@@ -1,0 +1,14 @@
+CREATE TABLE building (
+id INT,
+hotel_class INT,
+number_of_floors INT,
+number_of_rooms INT,
+employees INT[]
+);
+
+id;hotel_class;number_of_floors;number_of_rooms;employees
+1; 4; 10; 100; [10, 15, 20, 25, 30] 
+2; 3; 8; 80; [5, 10, 15, 20, 25]
+3; 5; 12; 120; [15, 20, 25, 30,  5]
+4; 2; 6; 60; [1, 6, 11, 16, 21]
+5; 4; 10; 100; [10, 12, 14, 16, 18]
