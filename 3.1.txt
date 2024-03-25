@@ -1,0 +1,137 @@
+create or replace trigger before_upd
+before update on categories
+for each row
+execute function log_t_upd_ins();
+
+create or replace trigger before_ins
+before insert on categories
+for each row
+execute function log_t_upd_ins();
+
+create or replace trigger before_upd
+before update on products
+for each row
+execute function log_t_upd_ins();
+
+create or replace trigger before_ins
+before insert on products
+for each row
+execute function log_t_upd_ins();
+
+
+create or replace trigger before_upd
+before update on employees
+for each row
+execute function log_t_upd_ins();
+
+create or replace trigger before_ins
+before insert on employees
+for each row
+execute function log_t_upd_ins();
+
+
+create or replace trigger before_upd
+before update on customers
+for each row
+execute function log_t_upd_ins();
+
+create or replace trigger before_ins
+before insert on customers
+for each row
+execute function log_t_upd_ins();
+
+select * from categories
+insert into categories values (3,'Платья')
+update categories set name = 'Кепки' where id = 2
+
+select * from products
+insert into products values (3,'Наушники')
+update products set name = 'Майки' where id = 2
+
+select * from products
+insert into products values (3,'Наушники')
+update products set name = 'Майки' where id = 2
+
+select * from t
+delete from t where id > 2
+insert into t values (3,'Три')
+update t set s = 'Один' where id = 3
+
+create or replace function log_t_upd_ins()
+returns trigger as $$
+begin
+	if TG_OP = 'INSERT' then
+		new.ins_user:=current_user;
+		new.ins_time:=current_timestamp;
+		return new;
+	end if;
+	if TG_OP = 'UPDATE' then
+		new.upd_user:=current_user;
+		new.upd_time:=current_timestamp;
+		return new;
+	end if;
+end;
+$$ language plpgsql;
+
+create or replace trigger tr_before_upd_ins_t
+before update or insert on t
+for each row
+execute function log_t_upd_ins();
+
+
+CREATE TABLE categories (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+CREATE TABLE products (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    category_id INT,
+    price DECIMAL(10, 2)
+);
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    position VARCHAR(100),
+    salary DECIMAL(10, 2)
+);
+CREATE TABLE customers (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100),
+    phone VARCHAR(20)
+);
+
+INSERT INTO categories VALUES 
+(1,'Электроника'),
+(2,'Одежда');
+INSERT INTO products VALUES 
+(1, 'Смартфон', 5, 25000.00),
+(2, 'Футболка', 4, 1500.00);
+INSERT INTO employees VALUES 
+(1, 'Иванов Иван', 'Менеджер', 30000),
+(2, 'Петров Петр', 'Продавец', 25000);
+INSERT INTO customers VALUES 
+(1, 'Анна Смирнова', 'anna@example.com', 8546128125),
+(2, 'Дмитрий Иванов', 'dima@example.com', 851293151);
+
+ALTER TABLE categories
+ADD ins_time timestamp,
+ADD ins_user VARCHAR(50),
+ADD upd_time timestamp,
+ADD upd_user VARCHAR(50);
+ALTER TABLE products
+ADD ins_time timestamp,
+ADD ins_user VARCHAR(50),
+ADD upd_time timestamp,
+ADD upd_user VARCHAR(50);
+ALTER TABLE employees
+ADD ins_time timestamp,
+ADD ins_user VARCHAR(50),
+ADD upd_time timestamp,
+ADD upd_user VARCHAR(50);
+ALTER TABLE customers
+ADD ins_time timestamp,
+ADD ins_user VARCHAR(50),
+ADD upd_time timestamp,
+ADD upd_user VARCHAR(50);
