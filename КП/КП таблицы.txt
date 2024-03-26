@@ -1,0 +1,93 @@
+Заполни на русском языке следующие таблицы по 10 строчек:
+CREATE TABLE partners(
+id INT PRIMARY KEY,
+organization VARCHAR(100),
+email VARCHAR(100),
+address VARCHAR(255)
+);	
+CREATE TABLE clients (
+id INT PRIMARY KEY,
+surname VARCHAR(50),
+name VARCHAR(50),
+patronymic VARCHAR(50),
+birthday DATE,
+phone VARCHAR(15),
+address VARCHAR(100),
+email VARCHAR(100),
+partner_id INT,
+FOREIGN KEY (partner_id) REFERENCES partners(id)
+);
+CREATE TABLE hotel (
+id INT PRIMARY KEY,
+class VARCHAR(50),
+number_of_floors INT,
+rooms_on_floor INT
+);
+CREATE TABLE rooms (
+id INT PRIMARY KEY,
+room_class VARCHAR(20),
+capacity VARCHAR(50),
+price DECIMAL(10, 2),
+status VARCHAR(20),
+building INT REFERENCES hotel (id),
+booking_id INT Unique
+);
+CREATE TABLE reservations (
+id INT PRIMARY KEY REFERENCES rooms (booking_id),
+client_id INT,
+room_number INT,
+in_data DATE,
+out_data DATE
+);
+CREATE TABLE history (
+	id INT PRIMARY KEY,
+	client_id INT References clients(id),
+	room_number INT References rooms(id),
+	check_in_data DATE,
+	check_out_data DATE,
+	last_payment numeric(15,2),
+	payment numeric(15,2),
+	total_debt numeric(15,2)
+);
+CREATE TABLE complaints (
+    history_id INT UNIQUE PRIMARY KEY References history(id),
+    data DATE,
+    description TEXT,
+    status varchar(30)
+);
+CREATE TABLE services (
+id INT PRIMARY KEY,
+name VARCHAR(100),
+price DECIMAL(15, 2)
+);
+CREATE TABLE services_list (
+    history_id INT UNIQUE PRIMARY KEY References history(id),
+    service_id INT References services(id)
+);
+CREATE TABLE schedule (
+id INT PRIMARY KEY,
+employee_id INT,
+data DATE,
+start_time TIME,
+end_time TIME
+);
+CREATE TABLE employees (
+id INT PRIMARY KEY REFERENCES hotel (id),
+surname VARCHAR(50),
+name VARCHAR(50),
+patronymic VARCHAR(50),
+post VARCHAR(100),
+corp INT,
+salary INT,
+work_schedule int REFERENCES schedule (id), 
+hire_date DATE,
+gender VARCHAR(10),
+phone_number VARCHAR(20),
+address VARCHAR(100)
+);
+CREATE TABLE budget (
+    id INT PRIMARY KEY,
+    type VARCHAR(10),
+	description text,
+    amount DECIMAL(10, 2)
+);
