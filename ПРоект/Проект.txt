@@ -1,0 +1,243 @@
+Окно Авторизации
+<Grid Height="60" VerticalAlignment="Top" HorizontalAlignment="Center" Background="#FFB39ECB" Width="{Binding Width, ElementName=window}">
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" Height="35" TextAlignment="Center" Text="Ремонт оборудования - Авторизация" Margin="0,15,0,0"/>
+    <Image Source="D:\Учёба\Программные модули\Проект\Img\ico.png"  Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,5,0,0"/>
+</Grid>
+<Image Source="D:\Учёба\Программные модули\Проект\Img\logo.png"  Width="130" Height="130" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,105,0,0"/>
+<TextBlock FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Height="25" TextAlignment="Right" Text="Выберите роль:" Margin="0,0,135,200"/>
+<Button FontSize="16" Content="Регистрация" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="110" Height="35" Margin="0,0,270,10" Click="Button_Click_Registration"/>
+<Button FontSize="16" Content="Выход" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="90" Height="35" Margin="250,0,0,10" Click="Button_Click_Close"/>
+<Button FontSize="16" Content="Вход" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="90" Height="35" Margin="0,0,0,10"/>
+<TextBlock FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Height="25" TextAlignment="Right" Text="Пароль:" Margin="0,0,135,130"/>
+<TextBlock FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Height="25" TextAlignment="Right" Text="Логин:" Margin="0,70,135,130"/>
+<TextBox TextWrapping="Wrap" Text="" Width="120" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="135,0,0,130"/>
+<TextBox TextWrapping="Wrap" Text="" Width="120" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="135,70,0,130"/>
+<ComboBox Name="ComboBox1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="25" Margin="135,0,0,200">
+    <ComboBoxItem Content="Клиент"></ComboBoxItem>
+    <ComboBoxItem Content="Менеджер"></ComboBoxItem>
+    <ComboBoxItem Content="Исполнитель"></ComboBoxItem>
+</ComboBox>
+<Button FontSize="16" Content="Клиент" HorizontalAlignment="Right" VerticalAlignment="Top" Width="90" Height="35" Margin="0,250,10,0" Click="Button_Click_Client"/>
+<Button FontSize="16" Content="Ремонт" HorizontalAlignment="Right" VerticalAlignment="Top" Width="90" Height="35" Margin="0,300,10,0" Click="Button_Click_Repair"/>
+<Button FontSize="16" Content="Менеджер" HorizontalAlignment="Right" VerticalAlignment="Top" Width="90" Height="35" Click="Button_Click_Manager" Margin="0,200,10,0"/>
+
+private void Button_Click_Registration(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Registration RegistrationForm = new Registration();
+    RegistrationForm.Show();
+}
+private void Button_Click_Close(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+}
+private void Button_Click_Client(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Client ClientForm = new Client();
+    ClientForm.Show();
+}
+private void Button_Click_Repair(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    RepairRequest Repair = new RepairRequest();
+    Repair.Show();
+}
+private void Button_Click_Manager(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Manager Manage = new Manager();
+    Manage.Show();
+}
+///////////////////////////
+Окно Регистрации
+<Grid>
+    <Grid Height="60" VerticalAlignment="Top" HorizontalAlignment="Center" Background="#FFB39ECB" Width="{Binding Width, ElementName=window}" >
+        <TextBlock FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="35" TextAlignment="Center" Text="Регистрация" Margin="100,15,0,0"/>
+    </Grid>
+    <TextBox TextWrapping="Wrap" Text="Имя" Width="170" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,180,190"/>
+    <TextBox TextWrapping="Wrap" Text="Отчество" Width="170" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,180,120"/>
+    <TextBox TextWrapping="Wrap" Text="Фамилия" Width="170" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="180,0,0,190"/>
+    <TextBox TextWrapping="Wrap" Text="Логин" Width="170" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="180,0,0,120"/>
+    <TextBox TextWrapping="Wrap" Text="Домашний адрес" Width="350" Height="75" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    <TextBox TextWrapping="Wrap" Text="Пароль" Width="170" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,120,180,0"/>
+    <TextBox TextWrapping="Wrap" Text="Повторите пароль" Width="170" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="180,120,0,0"/>
+    <Button FontSize="16" Content="Регистрация" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="110" Height="25" Margin="0,0,0,45"/>
+    <Button FontSize="16" Content="Выход" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="110" Height="25" Margin="0,0,10,10" Click="Button_Click_Close"/>
+    <Button FontSize="16" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="110" Height="25" Margin="10,0,0,10" Click="Button_Click_Back"/>
+</Grid>
+
+private void Button_Click_Back(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Authorization = new MainWindow();
+    Authorization.Show();
+}
+private void Button_Click_Close(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Authorization = new MainWindow();
+    Authorization.Show();
+}
+////////////////////
+Окно Клиента
+<Grid>
+    <Grid Height="60" VerticalAlignment="Top" HorizontalAlignment="Center" Background="#FFB39ECB" Width="{Binding Width, ElementName=window}" >
+        <TextBlock FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="35" TextAlignment="Center" Text="Окно клиента" Margin="100,15,0,0"/>
+        <Image Source="D:\Учёба\Программные модули\Проект\Img\ico.png"  Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,5,0,0"/>
+    </Grid>
+    <Image Source="D:\Учёба\Программные модули\Проект\Img\client.png"  Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,0"/>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="30" Margin="0,65,0,0" TextAlignment="Center"><Run Language="ru-ru" Text="Доброго времени суток!"/></TextBlock>
+    <Button FontSize="16" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="110" Height="25" Margin="10,0,0,10" Click="Button_Click_Back"/>
+    <Button FontSize="16" Content="Мой профиль" HorizontalAlignment="Left" VerticalAlignment="Center" Width="110" Height="35" Margin="10,200,0,0" Click="Button_Click_Profile"/>
+    <Button FontSize="16" Content="Выход" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="110" Height="25" Margin="0,0,10,10" Click="Button_Click_Exit"/>
+    <Button FontSize="16" Content="Заявка на ремонт" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="35" Margin="100,0,0,100"/>
+    <Button FontSize="16" Content="Просмотр заявки" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="35" Margin="100,0,0,0"/>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="25" Margin="0,100,0,0" TextAlignment="Center"><Run Language="ru-ru" Text="Фамилия Имя"/></TextBlock>
+</Grid>
+
+private void Button_Click_Back(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Authorization = new MainWindow();
+    Authorization.Show();
+}
+private void Button_Click_Profile(object sender, RoutedEventArgs e)
+{
+    Registration RegistrationForm = new Registration();
+    RegistrationForm.Show();
+}
+private void Button_Click_Exit(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Authorization = new MainWindow();
+    Authorization.Show();
+}
+////////////////////////
+Окно Менеджера
+<Grid>
+    <Grid Height="60" VerticalAlignment="Top" HorizontalAlignment="Center" Background="#FFB39ECB" Width="{Binding Width, ElementName=window}" >
+        <TextBlock FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Height="35" TextAlignment="Center" Text="Окно менеджера" Margin="100,15,0,0"/>
+        <Image Source="D:\Учёба\Программные модули\Проект\Img\ico.png"  Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,5,0,0"/>
+    </Grid>
+    <Image Source="D:\Учёба\Программные модули\Проект\Img\manager.png"  Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,0"/>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="25" Margin="0,65,0,0" TextAlignment="Center"><Run Text="Фамилия Имя"/><LineBreak/><Run/></TextBlock>
+    <Button FontSize="16" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="110" Height="25" Margin="10,0,0,10" Click="Button_Click_Back"/>
+    <Button FontSize="16" Content="Выход" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="110" Height="25" Margin="0,0,10,10" Click="Button_Click_Close"/>
+    <Button FontSize="16" Content="Заявка на ремонт" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="35" Margin="100,0,0,150"/>
+    <Button FontSize="16" Content="Обработка заявки" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="35" Margin="100,0,0,50"/>
+    <Button FontSize="16" Content="Исполнители" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="35" Margin="100,0,0,-50"/>
+    <Button FontSize="16" Content="Статистика" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="35" Margin="100,0,0,-150"/>
+</Grid>
+
+private void Button_Click(object sender, RoutedEventArgs e)
+{
+
+}
+private void Button_Click_Back(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Authorization = new MainWindow();
+    Authorization.Show();
+}
+private void Button_Click_Close(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Authorization = new MainWindow();
+    Authorization.Show();
+}
+///////////////////////////
+Окно Исполнителя
+<Grid>
+    <Image Source="D:\Учёба\Программные модули\Проект\Img\executor.png"  Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,0"/>
+    <TextBlock FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="175" Height="25" Margin="100,10,0,0"><Run Language="ru-ru" Text="Окно исполнителя"/></TextBlock>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="25" Margin="0,45,0,0" TextAlignment="Center"><Run Text="Фамилия Имя"/><LineBreak/><Run Text=""/></TextBlock>
+    <Button FontSize="16" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="110" Height="25" Margin="10,0,0,10" Click="Button_Click_Back"/>
+    <Button FontSize="16" Content="Выход" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="110" Height="25" Margin="0,0,10,10" Click="Button_Click_Close"/>
+    <Button FontSize="16" Content="Исполнение заявки" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="35" Margin="100,0,0,150"/>
+    <Button FontSize="16" Content="Отчетность" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="35" Margin="100,0,0,50"/>
+</Grid>
+
+private void Button_Click_Back(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Authorization = new MainWindow();
+    Authorization.Show();
+}
+private void Button_Click_Close(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Authorization = new MainWindow();
+    Authorization.Show();
+}
+///////////////
+Окно Ремонта
+<Grid RenderTransformOrigin="0.5,0.5">
+    <Grid.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform ScaleX="1"/>
+            <SkewTransform/>
+            <RotateTransform/>
+            <TranslateTransform/>
+        </TransformGroup>
+    </Grid.RenderTransform>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" Height="25" Margin="0,10,400,0"><Run Language="ru-ru" Text="Заявка на ремонт"/></TextBlock>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" Height="25" Margin="0,45,150,0" TextAlignment="Left"><Run Language="ru-ru" Text="Выберите оборудование:"/></TextBlock>
+    <Button FontSize="16" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="110" Height="25" Margin="10,0,0,10" Click="Button_Click_Back"/>
+    <Button FontSize="16" Content="Выход" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="110" Height="25" Margin="681,0,0,10" Click="Button_Click_Close"/>
+    <Button FontSize="16" Content="Отправить" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="110" Height="25" Margin="0,0,0,10"/>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="25" Margin="201,80,431,0" TextAlignment="Left"><Run Language="ru-ru" Text="- наименование"/></TextBlock>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="25" Margin="201,115,431,0" TextAlignment="Left"><Run Language="ru-ru" Text="- категория"/></TextBlock>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="25" Margin="201,150,431,0" TextAlignment="Left"><Run Language="ru-ru" Text="- вид"/></TextBlock>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="55" Margin="201,185,431,0" TextAlignment="Left"><Run Language="ru-ru" Text="Опишите проблему"/></TextBlock>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="25" Margin="201,250,431,0" TextAlignment="Left"><Run Language="ru-ru" Text="Дата добавления"/></TextBlock>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="25" Margin="201,285,431,0" TextAlignment="Left"><Run Language="ru-ru" Text="Приоритетность"/></TextBlock>
+    <TextBlock FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="25" Margin="201,320,431,0" TextAlignment="Left"><Run Language="ru-ru" Text="Клиент"/></TextBlock>
+    <ComboBox x:Name="ComboBox1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="25" Margin="376,80,296,0">
+        <ComboBoxItem Content="Клиент"/>
+        <ComboBoxItem Content="Менеджер"/>
+        <ComboBoxItem Content="Исполнитель"/>
+    </ComboBox>
+    <ComboBox x:Name="ComboBox1_Copy" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="25" Margin="376,115,296,0">
+        <ComboBoxItem Content="Клиент"/>
+        <ComboBoxItem Content="Менеджер"/>
+        <ComboBoxItem Content="Исполнитель"/>
+    </ComboBox>
+    <ComboBox x:Name="ComboBox1_Copy1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="25" Margin="376,150,296,0">
+        <ComboBoxItem Content="Клиент"/>
+        <ComboBoxItem Content="Менеджер"/>
+        <ComboBoxItem Content="Исполнитель"/>
+    </ComboBox>
+    <TextBox TextWrapping="Wrap" Text="" Width="406" Height="50" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="376,185,10,0"/>
+    <CheckBox x:Name="myCheckBox" IsChecked="False" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="393,290,0,0" Width="16" Height="16" RenderTransformOrigin="0.5,0.5" BorderBrush="Black">
+        <CheckBox.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleX="2" ScaleY="2"/>
+                <SkewTransform/>
+                <RotateTransform/>
+                <TranslateTransform X="0" Y="0"/>
+            </TransformGroup>
+        </CheckBox.RenderTransform>
+    </CheckBox>
+</Grid>
+
+private void CheckBox_Checked(object sender, RoutedEventArgs e)
+{
+    myCheckBox.IsChecked = true;
+}
+private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+{
+    myCheckBox.IsChecked = false;
+}
+private void Button_Click_Back(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Authorization = new MainWindow();
+    Authorization.Show();
+}
+private void Button_Click_Close(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Authorization = new MainWindow();
+    Authorization.Show();
+}
