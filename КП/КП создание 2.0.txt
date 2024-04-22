@@ -42,6 +42,7 @@ drop table if exists reservations cascade;
 CREATE TABLE reservations (
 	id INT PRIMARY KEY REFERENCES rooms (booking_id),
 	client_id INT,
+	partner_id INT,
 	crop INT,
 	room_number INT,
 	in_data DATE,
