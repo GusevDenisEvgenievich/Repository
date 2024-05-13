@@ -1,0 +1,258 @@
+val navController= rememberNavController()
+            Scaffold(
+                topBar = {myTopBar(navController)},
+                bottomBar = {myBottomBar(navController)})
+            { paddingValues ->
+                NavHost(navController = navController, startDestination = "a") {
+                    composable("a") { a(paddingValues) }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun myTopBar(navController: NavHostController) {
+    val currentRoute = navController.currentBackStackEntry?.destination?.route
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    when (val currentRoute = navBackStackEntry?.destination?.route) { }
+    Row(
+        Modifier
+            .background(Color(156, 156, 156))
+            .height(50.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center){
+        if (currentRoute=="a") Text(text = "Registration", fontSize = 35.sp)
+        if (currentRoute=="b") Text(text = "Ворота", fontSize = 35.sp)
+        if (currentRoute=="c") Text(text = "Магазин", fontSize = 35.sp)
+    }
+}
+
+@Composable
+fun myBottomBar(navController: NavHostController) {
+    Row(
+        Modifier
+            .background(Color(156, 156, 156))
+            .height(50.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround){
+        Icon(Icons.Default.Home,"",Modifier
+            .clickable{navController.navigate("a")})
+        Icon(Icons.Default.Place,"",Modifier
+            .clickable{navController.navigate("b")})
+        Icon(Icons.Default.ShoppingCart,"",Modifier
+            .clickable{navController.navigate("c")})
+        Icon(Icons.Default.Email,"",Modifier
+            .clickable{navController.navigate("d")})
+    }
+}
+
+@Composable
+fun a(paddingValues: PaddingValues) {
+    var license by remember {mutableStateOf(false)}
+    var name by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var checkpass by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .padding(paddingValues)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        // Сдвиг надписи "Create an account" вниз
+        Spacer(Modifier.weight(1f))
+
+        // Поле ввода полного имени
+        OutlinedTextField(name, {name=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Full Name")
+                }
+            }
+        )
+        Spacer(Modifier.weight(1f))
+
+        // Поле ввода номера телефона
+        OutlinedTextField(phone, {phone=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Phone Number")
+                }
+            }
+        )
+        Spacer(Modifier.weight(1f))
+
+        // Поле ввода адреса электронной почты
+        OutlinedTextField(email, {email=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Email Adress")
+                }
+            }
+        )
+        Spacer(Modifier.weight(1f))
+
+        // Поле ввода пароля
+        OutlinedTextField(password, {password=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Password")
+                }
+            }
+        )
+        Spacer(Modifier.weight(1f))
+
+        // Поле ввода пароля повторно
+        OutlinedTextField(checkpass, {checkpass=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Confirm Password")
+                }
+            }
+        )
+        Spacer(Modifier.weight(1f))
+
+        // Галочка для пользовательского соглашения
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(checked = license==true, onCheckedChange = {license=!license})
+            Text(
+                text = "You agree to our ",
+                color = Color.Gray,
+            )
+            Text(
+                text = "Terms and conditions ",
+                color = Color.Magenta
+            )
+            Text(
+                text = "and ",
+                color = Color.Gray
+            )
+            Text(
+                text = "privacy policy",
+                color = Color.Magenta
+            )
+        }
+        Spacer(Modifier.weight(1f))
+
+        // Кнопка "Зарегистрироваться"
+        Button(onClick = {  },Modifier
+            .align(alignment = Alignment.CenterHorizontally)) {
+            Text(text = "Sign Up")
+        }
+        Spacer(Modifier.weight(1f))
+
+        Text(
+            text = "Already have an account? Sign in",
+            color = Color.Gray,
+            modifier = Modifier
+                .padding(10.dp),
+        )
+        Spacer(Modifier.weight(1f))
+    }
+}
+////////////////////////////
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id ("com.android.application") version "8.2.2" apply false
+    id ("com.android.library") version "8.2.2" apply false
+    id ("org.jetbrains.kotlin.android") version "1.9.0" apply false
+    id ("com.google.devtools.ksp") version "1.9.0-1.0.12" apply false
+}
+////////////////////////////
+plugins {
+    id ("com.android.application")
+    id ("org.jetbrains.kotlin.android")
+    id ("com.google.devtools.ksp")
+}
+
+android {
+    namespace = "com.example.room"
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "com.example.room"
+        minSdk = 34
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
+
+dependencies {
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
+
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
