@@ -1,6 +1,6 @@
 val navController= rememberNavController()
             //NavHost(navController = navController, startDestination = "a") {}
-            a()
+            LogIn()
         }
     }
 }
@@ -44,7 +44,12 @@ val navController= rememberNavController()
 //}
 
 @Composable
-fun a() {
+fun SignUp() {
+    val mask = MaskVisualTransformation("+7(###)###-##-##")
+    var visibility1 by remember { mutableStateOf(false) }
+    var visibility2 by remember { mutableStateOf(false) }
+    var text1 by remember { mutableStateOf("By ticking this box, you agree to our") }
+    var text2 by remember { mutableStateOf("Terms and conditions and private policy") }
     var license by remember {mutableStateOf(false)}
     var name by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -56,14 +61,19 @@ fun a() {
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
     ) {
-        Text("Create an account",
-            fontSize = 36.sp)
-
-        Text("Complete the sign up process to get started",
-            color = Color(207,207,207))
-
+        Column (
+            Modifier
+                .weight(0.7f)
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("Create an account",
+                fontSize = 24.sp)
+            Text("Complete the sign up process to get started",
+                color = Color(207,207,207))
+        }
         // Поле ввода имени
         OutlinedTextField(name, {name=it}, Modifier
+            .weight(0.8f)
             .padding(5.dp)
             .fillMaxWidth(),
             label={
@@ -81,10 +91,11 @@ fun a() {
         )
 
         // Поле ввода номера телефона
-        OutlinedTextField(phone, {phone=it}, Modifier
+        OutlinedTextField(phone, {if (it.length<11) {phone=it}}, Modifier
+            .weight(0.8f)
             .padding(5.dp)
-            .fillMaxWidth()
-            .height(55.dp),
+            .fillMaxWidth(),
+            visualTransformation = mask,
             label={
                 Row() {
                     Text("Phone Number",
@@ -100,10 +111,11 @@ fun a() {
         )
 
         // Поле ввода электронной почты
-        OutlinedTextField(email, {email=it}, Modifier
-            .padding(5.dp)
-            .fillMaxWidth()
-            .height(55.dp),
+        OutlinedTextField(email, {email=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
             label={
                 Row() {
                     Text("Email Adress",
@@ -115,124 +127,209 @@ fun a() {
                     text = "*********@mail.com",
                     color = Color.Gray
                 )
-            }
+            },
         )
 
         // Поле ввода пароля
-        OutlinedTextField(password, {password=it}, Modifier
-            .padding(5.dp)
+        OutlinedTextField(password, {password=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility1) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(
+                    text = "",
+                    color = Color.Gray
+                )
+            },
+            trailingIcon = { Image(painterResource(R.drawable.eye),"", Modifier
+                .clickable { visibility1 = !visibility1 }
+                .align(Alignment.End)) }
+        )
+
+        // Поле ввода пароля повторно
+        OutlinedTextField(checkpass, {checkpass=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility2) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(
+                    text = "",
+                    color = Color.Gray
+                )
+            },
+            trailingIcon = { Image(painterResource(R.drawable.eye),"", Modifier
+                .clickable { visibility2 = !visibility2 }
+                .align(Alignment.End)) }
+        )
+
+        // Галочка для пользовательского соглашения
+        Row(
+            Modifier
+                .weight(0.5f)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(checked = license==true, onCheckedChange = {license=!license})
+            Text(text = "$text1 $text2")
+        }
+
+        // Кнопка "Регистрирации"
+        Button(onClick = {  }, Modifier
+            .weight(1f)
+            .clip(RectangleShape)
+            .padding(20.dp)
             .fillMaxWidth()
-            .height(55.dp),
+            .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(167,167,167))
+        ) {
+            Text(text = "Sign Up")
+        }
+        Column (
+            Modifier
+                .weight(1.2f)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "Already have an account? Sign in",
+                modifier = Modifier
+                    .padding(10.dp),
+                color = Color(207, 207, 207))
+            Text(
+                text = "or sign in using",
+                modifier = Modifier
+                    .padding(10.dp),
+                color = Color(207, 207, 207))
+            Image(painterResource(R.drawable.google),"",Modifier
+                .weight(1f))
+        }
+        Spacer(Modifier
+            .weight(0.1f))
+    }
+}
+
+@Composable
+fun LogIn() {
+    var visibility1 by remember { mutableStateOf(false) }
+    var remember by remember {mutableStateOf(false)}
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(Modifier.weight(0.8f))
+        Column (
+            Modifier
+                .weight(0.9f)
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("Welcome Back",
+                fontSize = 24.sp)
+            Text("Fill in your email and password to continue",
+                color = Color(207,207,207))
+        }
+        OutlinedTextField(email, {email=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
             label={
                 Row() {
-                    Text("Password",
+                    Text("Email Adress",
                         color = Color(207,207,207))
                 }
             },
             placeholder = {
                 Text(
-                    text = "Ivanov Ivan",
+                    text = "*********@mail.com",
                     color = Color.Gray
                 )
-            }
+            },
         )
-
-        // Поле ввода пароля повторно
-        OutlinedTextField(checkpass, {checkpass=it}, Modifier
-            .padding(5.dp)
-            .fillMaxWidth()
-            .height(55.dp),
-            label={
-                Row() {
-                    Text("Confirm Password",
-                        color = Color(207,207,207))
-                }
-            }
-        )
-        // Галочка для пользовательского соглашения
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Checkbox(checked = license==true, onCheckedChange = {license=!license})
-            Text(text = "By ticking this box, you agree to our",
-                color = Color(207,207,207))
-            Text(text = "Terms and conditions and private policy",
-                color = Color(235, 188, 46))
-        }
-
-        // Кнопка "Регистрирации"
-        Button(onClick = {  },Modifier
-            .align(alignment = Alignment.CenterHorizontally)) {
-            Text(text = "Sign Up")
-        }
-
-        Text(
-            text = "Already have an account? Sign in",
-            modifier = Modifier
-                .padding(10.dp),
-            color = Color(207, 207, 207)
-        )
-    }
-}
-
-@Composable
-fun b(paddingValues: PaddingValues) {
-    var name by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    Column(
-        modifier = Modifier
-            .padding(paddingValues)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-    ) {
-        // Поле ввода имени
-        OutlinedTextField(name, {name=it}, Modifier
-            .padding(5.dp)
-            .fillMaxWidth()
-            .height(55.dp),
-            label={
-                Row() {
-                    Text("Full Name")
-                }
-            }
-        )
-        Spacer(Modifier.weight(1f))
 
         // Поле ввода пароля
-        OutlinedTextField(password, {password=it}, Modifier
-            .padding(5.dp)
-            .fillMaxWidth()
-            .height(55.dp),
+        OutlinedTextField(password, {password=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility1) VisualTransformation.None else PasswordVisualTransformation(),
             label={
-                Row() {
-                    Text("Password")
-                }
-            }
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(
+                    text = "",
+                    color = Color.Gray
+                )
+            },
+            trailingIcon = { Image(painterResource(R.drawable.eye),"", Modifier
+                .clickable { visibility1 = !visibility1 }
+                .align(Alignment.End)) }
         )
+        Row(
+            Modifier
+                .padding(5.dp)
+                .weight(0.5f)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row (verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(checked = remember==true, onCheckedChange = {remember=!remember})
+                Text(text = "Remember password")
+            }
+            Row () {
+                Text(text = "Forgot Password?", color = Color(5,96,250))
+            }
+        }
         Spacer(Modifier.weight(1f))
-
         // Кнопка "Авторизации"
-        Button(onClick = {  },Modifier
-            .align(alignment = Alignment.CenterHorizontally)) {
+        Button(onClick = {  }, Modifier
+            .weight(1f)
+            .clip(RectangleShape)
+            .padding(20.dp)
+            .fillMaxWidth()
+            .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(167,167,167))
+        ) {
             Text(text = "Log In")
         }
-        Spacer(Modifier.weight(1f))
-
-        // Кнопка "Регистрации"
-        Button(onClick = {  },Modifier
-            .align(alignment = Alignment.CenterHorizontally)) {
-            Text(text = "Sign Up")
+        Column (
+            Modifier
+                .weight(1.2f)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "Already have an account? Sign in",
+                modifier = Modifier
+                    .padding(10.dp),
+                color = Color(207, 207, 207))
+            Text(
+                text = "or log in using",
+                modifier = Modifier
+                    .padding(10.dp),
+                color = Color(207, 207, 207))
+            Image(painterResource(R.drawable.google),"",Modifier
+                .weight(1f))
         }
-        Spacer(Modifier.weight(1f))
-
-        // Кнопка "Забыл пароль"
-        Button(onClick = {  },Modifier
-            .align(alignment = Alignment.CenterHorizontally)) {
-            Text(text = "Forgot Password")
-        }
-        Spacer(Modifier.weight(1f))
+        Spacer(Modifier.weight(0.8f))
     }
 }
 
@@ -308,6 +405,41 @@ fun e(paddingValues: PaddingValues) {
         Button(onClick = {  },Modifier
             .align(alignment = Alignment.CenterHorizontally)) {
             Text(text = "Log In")
+        }
+    }
+}
+
+class MaskVisualTransformation(private val mask: String): VisualTransformation {
+    private val specialSymbolsIndices = mask.indices.filter { mask[it] != '#' }
+
+    override fun filter(text: AnnotatedString): TransformedText {
+        var out = ""
+        var maskIndex = 0
+        text.forEach { char ->
+            while (specialSymbolsIndices.contains(maskIndex)) {
+                out += mask[maskIndex]
+                maskIndex++
+            }
+            out += char
+            maskIndex++
+        }
+        return TransformedText(AnnotatedString(out), offsetTranslator())
+    }
+
+    private fun offsetTranslator() = object: OffsetMapping {
+        override fun originalToTransformed(offset: Int): Int {
+            val offsetValue = offset.absoluteValue
+            if (offsetValue == 0) return 0
+            var numberOfHashtags = 0
+            val masked = mask.takeWhile {
+                if (it == '#') numberOfHashtags++
+                numberOfHashtags < offsetValue
+            }
+            return masked.length + 1
+        }
+
+        override fun transformedToOriginal(offset: Int): Int {
+            return mask.take(offset.absoluteValue).count { it == '#' }
         }
     }
 }
