@@ -1,0 +1,313 @@
+val navController= rememberNavController()
+            //NavHost(navController = navController, startDestination = "a") {}
+            a()
+        }
+    }
+}
+
+//@Composable
+//fun myTopBar(navController: NavHostController) {
+//    val currentRoute = navController.currentBackStackEntry?.destination?.route
+//    val navBackStackEntry by navController.currentBackStackEntryAsState()
+//    when (val currentRoute = navBackStackEntry?.destination?.route) { }
+//    Row(
+//        Modifier
+//            .height(50.dp)
+//            .fillMaxWidth(),
+//        verticalAlignment = Alignment.CenterVertically,
+//        horizontalArrangement = Arrangement.Center){
+//        if (currentRoute=="a") Text(text = "Sign Up", fontSize = 35.sp)
+//        if (currentRoute=="b") Text(text = "Log in", fontSize = 35.sp)
+//        if (currentRoute=="c") Text(text = "Forgot Password", fontSize = 35.sp)
+//        if (currentRoute=="d") Text(text = "OTP Verification", fontSize = 35.sp)
+//        if (currentRoute=="e") Text(text = "New Password", fontSize = 35.sp)
+//    }
+//}
+//
+//@Composable
+//fun myBottomBar(navController: NavHostController) {
+//    Row(
+//        Modifier
+//            .height(50.dp)
+//            .fillMaxWidth(),
+//        verticalAlignment = Alignment.CenterVertically,
+//        horizontalArrangement = Arrangement.SpaceAround){
+//        Icon(Icons.Default.Home,"",Modifier
+//            .clickable{navController.navigate("a")})
+//        Icon(Icons.Default.Place,"",Modifier
+//            .clickable{navController.navigate("b")})
+//        Icon(Icons.Default.ShoppingCart,"",Modifier
+//            .clickable{navController.navigate("c")})
+//        Icon(Icons.Default.Email,"",Modifier
+//            .clickable{navController.navigate("d")})
+//    }
+//}
+
+@Composable
+fun a() {
+    var license by remember {mutableStateOf(false)}
+    var name by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var checkpass by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text("Create an account",
+            fontSize = 36.sp)
+
+        Text("Complete the sign up process to get started",
+            color = Color(207,207,207))
+
+        // Поле ввода имени
+        OutlinedTextField(name, {name=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth(),
+            label={
+                Row() {
+                    Text("Full Name",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(
+                    text = "Ivanov Ivan",
+                    color = Color.Gray
+                )
+            }
+        )
+
+        // Поле ввода номера телефона
+        OutlinedTextField(phone, {phone=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Phone Number",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(
+                    text = "+7(999)999-99-99",
+                    color = Color.Gray
+                )
+            }
+        )
+
+        // Поле ввода электронной почты
+        OutlinedTextField(email, {email=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Email Adress",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(
+                    text = "*********@mail.com",
+                    color = Color.Gray
+                )
+            }
+        )
+
+        // Поле ввода пароля
+        OutlinedTextField(password, {password=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Password",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(
+                    text = "Ivanov Ivan",
+                    color = Color.Gray
+                )
+            }
+        )
+
+        // Поле ввода пароля повторно
+        OutlinedTextField(checkpass, {checkpass=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Confirm Password",
+                        color = Color(207,207,207))
+                }
+            }
+        )
+        // Галочка для пользовательского соглашения
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Checkbox(checked = license==true, onCheckedChange = {license=!license})
+            Text(text = "By ticking this box, you agree to our",
+                color = Color(207,207,207))
+            Text(text = "Terms and conditions and private policy",
+                color = Color(235, 188, 46))
+        }
+
+        // Кнопка "Регистрирации"
+        Button(onClick = {  },Modifier
+            .align(alignment = Alignment.CenterHorizontally)) {
+            Text(text = "Sign Up")
+        }
+
+        Text(
+            text = "Already have an account? Sign in",
+            modifier = Modifier
+                .padding(10.dp),
+            color = Color(207, 207, 207)
+        )
+    }
+}
+
+@Composable
+fun b(paddingValues: PaddingValues) {
+    var name by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .padding(paddingValues)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        // Поле ввода имени
+        OutlinedTextField(name, {name=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Full Name")
+                }
+            }
+        )
+        Spacer(Modifier.weight(1f))
+
+        // Поле ввода пароля
+        OutlinedTextField(password, {password=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Password")
+                }
+            }
+        )
+        Spacer(Modifier.weight(1f))
+
+        // Кнопка "Авторизации"
+        Button(onClick = {  },Modifier
+            .align(alignment = Alignment.CenterHorizontally)) {
+            Text(text = "Log In")
+        }
+        Spacer(Modifier.weight(1f))
+
+        // Кнопка "Регистрации"
+        Button(onClick = {  },Modifier
+            .align(alignment = Alignment.CenterHorizontally)) {
+            Text(text = "Sign Up")
+        }
+        Spacer(Modifier.weight(1f))
+
+        // Кнопка "Забыл пароль"
+        Button(onClick = {  },Modifier
+            .align(alignment = Alignment.CenterHorizontally)) {
+            Text(text = "Forgot Password")
+        }
+        Spacer(Modifier.weight(1f))
+    }
+}
+
+@Composable
+fun c(paddingValues: PaddingValues) {
+    var email by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .padding(paddingValues)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        // Поле ввода почты
+        OutlinedTextField(email, {email=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Full Name")
+                }
+            }
+        )
+        Spacer(Modifier.weight(1f))
+
+        // Кнопка "Авторизации"
+        Button(onClick = {  },Modifier
+            .align(alignment = Alignment.CenterHorizontally)) {
+            Text(text = "Log In")
+        }
+    }
+}
+
+@Composable
+fun d(paddingValues: PaddingValues) {
+    Column(
+        modifier = Modifier
+            .padding(paddingValues)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        // Кнопка "Нового пароля"
+        Button(onClick = {  },Modifier
+            .align(alignment = Alignment.CenterHorizontally)) {
+            Text(text = "Set New Password")
+        }
+    }
+}
+
+@Composable
+fun e(paddingValues: PaddingValues) {
+    var email by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .padding(paddingValues)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        // Поле ввода имени
+        OutlinedTextField(email, {email=it}, Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+            label={
+                Row() {
+                    Text("Full Name")
+                }
+            }
+        )
+        Spacer(Modifier.weight(1f))
+
+        // Кнопка "Авторизации"
+        Button(onClick = {  },Modifier
+            .align(alignment = Alignment.CenterHorizontally)) {
+            Text(text = "Log In")
+        }
+    }
+}
