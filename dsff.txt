@@ -1,0 +1,344 @@
+package com.example.sssx
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.sssx.ui.theme.SssxTheme
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            SssxTheme {
+                Per()
+                Vtor()
+                Tre()
+                Chetyre()
+            }
+        }
+    }
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun Per() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.svozzz),
+            contentDescription = "Center Image"
+        )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun Vtor() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        // Картинка в центре экрана
+        Image(
+            painter = painterResource(id = R.drawable.zombisvo),
+            contentDescription = "Center Image",
+            modifier = Modifier.padding(bottom = 240.dp) // Отступ от кнопок
+        )
+        Spacer(modifier = Modifier.height(500.dp))
+        // Текст под картинкой
+        Column(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = 300.dp), // Добавляем отступ сверху
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Text(
+                text = "Quick Delivery At Your ",
+                style = TextStyle(
+                    color = Color.Blue,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+            Text(
+                text = "Doorstep",
+                style = TextStyle(
+                    color = Color.Blue,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+            Text(
+                text = "Enjoy quick pick-up and delivery to",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            )
+            Text(
+                text = "your destination",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            )
+
+        }
+
+        // Кнопки в нижней части экрана
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(start = 16.dp, end = 16.dp, bottom = 48.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                onClick = { /* Обработка нажатия на "Skip" */ },
+                modifier = Modifier.padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.Transparent,
+                    contentColor = Color.Blue
+                ),
+                contentPadding = PaddingValues(
+                    start = 32.dp, // Увеличиваем отступы для текста
+                    top = 12.dp,
+                    end = 32.dp,
+                    bottom = 12.dp
+                )
+            ) {
+                Text("Skip")
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                onClick = { /* Обработка нажатия на "Next" */ },
+                modifier = Modifier.padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.Blue,
+                    contentColor = Color.White
+                ),
+                contentPadding = PaddingValues(
+                    start = 32.dp, // Увеличиваем отступы для текста
+                    top = 12.dp,
+                    end = 32.dp,
+                    bottom = 12.dp
+                )
+            ) {
+                Text("Next")
+            }
+        }
+    }
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun Tre() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        // Картинка в центре экрана
+        Image(
+            painter = painterResource(id = R.drawable.z),
+            contentDescription = "Center Image",
+            modifier = Modifier.padding(bottom = 240.dp) // Отступ от кнопок
+        )
+        Spacer(modifier = Modifier.height(500.dp))
+        // Текст под картинкой
+        Column(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = 300.dp), // Добавляем отступ сверху
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Text(
+                text = "Flexible Payment",
+                style = TextStyle(
+                    color = Color.Blue,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+            Text(
+                text = "Different modes of payment either before and after delivery without stress",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            )
+            Text(
+                text = "before and after delivery without",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            )
+            Text(
+                text = "stress",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            )
+        }
+
+        // Кнопки в нижней части экрана
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(start = 16.dp, end = 16.dp, bottom = 48.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                onClick = { /* Обработка нажатия на "Skip" */ },
+                modifier = Modifier.padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.Transparent,
+                    contentColor = Color.Blue
+                ),
+                contentPadding = PaddingValues(
+                    start = 32.dp, // Увеличиваем отступы для текста
+                    top = 12.dp,
+                    end = 32.dp,
+                    bottom = 12.dp
+                )
+            ) {
+                Text("Skip")
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                onClick = { /* Обработка нажатия на "Next" */ },
+                modifier = Modifier.padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.Blue,
+                    contentColor = Color.White
+                ),
+                contentPadding = PaddingValues(
+                    start = 32.dp, // Увеличиваем отступы для текста
+                    top = 12.dp,
+                    end = 32.dp,
+                    bottom = 12.dp
+                )
+            ) {
+                Text("Next")
+            }
+        }
+    }
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun Chetyre() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        // Картинка в центре экрана
+        Image(
+            painter = painterResource(id = R.drawable.zombolatoriya),
+            contentDescription = "Center Image",
+            modifier = Modifier.padding(bottom = 240.dp) // Отступ от кнопок
+        )
+        Spacer(modifier = Modifier.height(500.dp))
+        // Текст под картинкой
+        Column(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = 300.dp), // Добавляем отступ сверху
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Text(
+                text = "Quick Delivery At Your ",
+                style = TextStyle(
+                    color = Color.Blue,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+            Text(
+                text = "Doorstep",
+                style = TextStyle(
+                    color = Color.Blue,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+            Text(
+                text = "Enjoy quick pick-up and delivery to",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            )
+            Text(
+                text = "your destination",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            )
+
+        }
+
+        // Кнопки в нижней части экрана
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(start = 16.dp, end = 16.dp, bottom = 48.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                onClick = { /* Обработка нажатия на "Skip" */ },
+                modifier = Modifier.padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.Transparent,
+                    contentColor = Color.Blue
+                ),
+                contentPadding = PaddingValues(
+                    start = 32.dp, // Увеличиваем отступы для текста
+                    top = 12.dp,
+                    end = 32.dp,
+                    bottom = 12.dp
+                )
+            ) {
+                Text("Skip")
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                onClick = { /* Обработка нажатия на "Next" */ },
+                modifier = Modifier.padding(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.Blue,
+                    contentColor = Color.White
+                ),
+                contentPadding = PaddingValues(
+                    start = 32.dp, // Увеличиваем отступы для текста
+                    top = 12.dp,
+                    end = 32.dp,
+                    bottom = 12.dp
+                )
+            ) {
+                Text("Next")
+            }
+        }
+    }
+}
