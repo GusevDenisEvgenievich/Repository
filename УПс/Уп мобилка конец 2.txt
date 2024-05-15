@@ -1,0 +1,611 @@
+val navController = rememberNavController()
+            NavHost(navController = navController, startDestination = "SignUp") {
+                composable("SignUp") { SignUp(navController) }
+                composable("LogIn") { LogIn(navController) }
+                composable("ForgotPassword") { ForgotPassword(navController) }
+                composable("OTPVerification") { OTPVerification(navController) }
+                composable("NewPassword") { NewPassword(navController) }
+                composable("Home") { Home() }
+            }
+        }
+    }
+}
+
+@Composable
+fun SignUp(navController: NavHostController) {
+    val mask = MaskVisualTransformation("+7(###)###-##-##")
+    var visibility1 by remember { mutableStateOf(false) }
+    var visibility2 by remember { mutableStateOf(false) }
+    var text1 by remember { mutableStateOf("By ticking this box, you agree to our") }
+    var text2 by remember { mutableStateOf("Terms and conditions and private policy") }
+    var license by remember {mutableStateOf(false)}
+    var name by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var checkpass by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Column (
+            Modifier
+                .weight(0.7f)
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("Create an account",
+                fontSize = 24.sp)
+            Text("Complete the sign up process to get started",
+                color = Color(207,207,207)
+            )
+        }
+        // Поле ввода имени
+        OutlinedTextField(name, {name=it}, Modifier
+            .weight(0.8f)
+            .padding(5.dp)
+            .fillMaxWidth(),
+            label={
+                Row() {
+                    Text("Full Name",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(text = "Ivanov Ivan",
+                    color = Color(207,207,207))
+            }
+        )
+
+        // Поле ввода номера телефона
+        OutlinedTextField(phone, {if (it.length<11) {phone=it}}, Modifier
+            .weight(0.8f)
+            .padding(5.dp)
+            .fillMaxWidth(),
+            visualTransformation = mask,
+            label={
+                Row() {
+                    Text("Phone Number",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(text = "+7(999)999-99-99",
+                    color = Color(207,207,207))
+            }
+        )
+
+        // Поле ввода электронной почты
+        OutlinedTextField(email, {email=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            label={
+                Row() {
+                    Text("Email Adress",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(text = "*********@mail.com",
+                    color = Color(207,207,207))
+            },
+        )
+
+        // Поле ввода пароля
+        OutlinedTextField(password, {password=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility1) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(text = "",
+                    color = Color(207,207,207))
+            },
+            trailingIcon = { Image(painterResource(if (visibility1) R.drawable.eye else R.drawable.close_eye),"",
+                Modifier
+                    .size(20.dp)
+                    .clickable { visibility1 = !visibility1 }
+                    .align(Alignment.End)) }
+        )
+
+        // Поле ввода пароля повторно
+        OutlinedTextField(checkpass, {checkpass=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility2) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(text = "",
+                    color = Color(207,207,207))
+            },
+            trailingIcon = { Image(painterResource(if (visibility2) R.drawable.eye else R.drawable.close_eye),"",
+                Modifier
+                    .size(20.dp)
+                    .clickable { visibility2 = !visibility2 }
+                    .align(Alignment.End)) }
+        )
+
+        // Галочка для пользовательского соглашения
+        Row(
+            Modifier
+                .weight(0.5f)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(checked = license==true, onCheckedChange = {license=!license})
+            Text(text = "$text1" + "$text2")
+        }
+
+        // Кнопка "Регистрирации"
+        Button(onClick = { if (RegistrationInputCheck(name, phone, email, password, checkpass, license)) navController.navigate("LogIn") },
+            Modifier
+                .weight(1f)
+                .padding(20.dp)
+                .fillMaxWidth()
+                .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(if (RegistrationInputCheck(name, phone, email, password, checkpass, license)) Color(5,96,250)
+            else Color(207, 207, 207))
+        ) {
+            Text(text = "Sign Up")
+        }
+        Column (
+            Modifier
+                .weight(1.2f)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Row () {
+                Text(
+                    text = "Already have an account?",
+                    color = Color(207, 207, 207))
+                Spacer(Modifier
+                    .size(10.dp))
+                Text(
+                    text = "Sign in",Modifier
+                        .clickable{navController.navigate("LogIn")},
+                    color = Color(5,96,250))
+            }
+            Text(
+                text = "or sign in using",
+                modifier = Modifier
+                    .padding(10.dp),
+                color = Color(207, 207, 207))
+            Image(painterResource(R.drawable.google),"",Modifier
+                .weight(1f))
+        }
+        Spacer(Modifier
+            .weight(0.1f))
+    }
+}
+
+@Composable
+fun LogIn(navController: NavHostController) {
+    var visibility1 by remember { mutableStateOf(false) }
+    var remember by remember {mutableStateOf(false)}
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(Modifier.weight(0.8f))
+        Column (
+            Modifier
+                .weight(0.9f)
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("Welcome Back",
+                fontSize = 24.sp)
+            Text("Fill in your email and password to continue",
+                color = Color(207,207,207))
+        }
+        OutlinedTextField(email, {email=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            label={
+                Row() {
+                    Text("Email Adress",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(text = "*********@mail.com",
+                    color = Color(207,207,207))
+            },
+        )
+
+        // Поле ввода пароля
+        OutlinedTextField(password, {password=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility1) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(text = "",
+                    color = Color(207,207,207))
+            },
+            trailingIcon = { Image(painterResource(if (visibility1) R.drawable.eye else R.drawable.close_eye),"",
+                Modifier
+                    .size(20.dp)
+                    .clickable { visibility1 = !visibility1 }
+                    .align(Alignment.End)) }
+        )
+        Row(
+            Modifier
+                .padding(5.dp)
+                .weight(0.5f)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row (verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(checked = remember==true, onCheckedChange = {remember=!remember})
+                Text(text = "Remember password")
+            }
+            Row () {
+                Text(text = "Forgot Password?",Modifier
+                    .clickable{navController.navigate("ForgotPassword")},
+                    color = Color(5,96,250))
+            }
+        }
+        Spacer(Modifier.weight(1f))
+        // Кнопка "Авторизации"
+        Button(onClick = {  }, Modifier
+            .weight(1f)
+            .padding(20.dp)
+            .fillMaxWidth()
+            .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(if (LoginInputCheck(email, password)) Color(5,96,250)
+            else Color(207, 207, 207))
+        ) {
+            Text(text = "Log In")
+        }
+        Column (
+            Modifier
+                .weight(1.2f)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Row () {
+                Text(
+                    text = "Don't have an account?",
+                    color = Color(207, 207, 207))
+                Spacer(Modifier
+                    .size(10.dp))
+                Text(
+                    text = "Sign Up",Modifier
+                        .clickable{navController.navigate("SignUp")},
+                    color = Color(5,96,250))
+            }
+            Text(
+                text = "or log in using",
+                modifier = Modifier
+                    .padding(10.dp),
+                color = Color(207, 207, 207))
+            Image(painterResource(R.drawable.google),"",Modifier
+                .weight(1f))
+        }
+        Spacer(Modifier.weight(0.8f))
+    }
+}
+
+@Composable
+fun ForgotPassword(navController: NavHostController) {
+    var email by remember { mutableStateOf("") }
+    val regex = Regex(".*@mail.com")
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(Modifier.weight(1f))
+        Column (
+            Modifier
+                .weight(0.9f)
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("Forgot Password",
+                fontSize = 24.sp)
+            Text("Enter your email address",
+                color = Color(207,207,207))
+        }
+        OutlinedTextField(email, {email=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            label={
+                Row() {
+                    Text("Email Adress",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(text = "*********@mail.com",
+                    color = Color(207,207,207))
+            },
+        )
+        Spacer(Modifier.weight(1f))
+        // Кнопка "Авторизации"
+        Button(onClick = { navController.navigate("OTPVerification") }, Modifier
+            .weight(1f)
+            .padding(20.dp)
+            .fillMaxWidth()
+            .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(if (regex.containsMatchIn(email)) Color(5,96,250)
+            else Color(207, 207, 207))
+        ) {
+            Text(text = "Send OTP")
+        }
+        Row (Modifier
+            .align(Alignment.CenterHorizontally)) {
+            Text(
+                text = "Remember password? Back to",
+                color = Color(207, 207, 207))
+            Spacer(Modifier
+                .size(10.dp))
+            Text(
+                text = "Sign In",Modifier
+                    .clickable{navController.navigate("LogIn")},
+                color = Color(5,96,250))
+        }
+        Spacer(Modifier.weight(2.5f))
+    }
+}
+
+@Composable
+fun OTPVerification(navController: NavHostController) {
+    var timer by remember { mutableStateOf("") }
+    var numb1 by remember { mutableStateOf("") }
+    var numb2 by remember { mutableStateOf("") }
+    var numb3 by remember { mutableStateOf("") }
+    var numb4 by remember { mutableStateOf("") }
+    var numb5 by remember { mutableStateOf("") }
+    var numb6 by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(Modifier.weight(0.8f))
+        Column (
+            Modifier
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("OTP Verification",
+                fontSize = 24.sp)
+            Text("Enter the 6 digit numbers sent to your email",
+                color = Color(207,207,207))
+        }
+        Spacer(Modifier.weight(0.2f))
+        Row (
+            Modifier
+                .padding(5.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            OutlinedTextField(numb1, {if (it.length<2) numb1=it},
+                Modifier
+                    .focusRequester(focusRequester = FocusRequester())
+                    .size(50.dp)
+            )
+            OutlinedTextField(numb2, {if (it.length<2) numb2=it},
+                Modifier
+                    .size(50.dp)
+            )
+            OutlinedTextField(numb3, {if (it.length<2) numb3=it},
+                Modifier
+                    .size(50.dp)
+            )
+            OutlinedTextField(numb4, {if (it.length<2) numb4=it},
+                Modifier
+                    .size(50.dp)
+            )
+            OutlinedTextField(numb5, {if (it.length<2) numb5=it},
+                Modifier
+                    .size(50.dp)
+            )
+            OutlinedTextField(numb6, {if (it.length<2) numb6=it},
+                Modifier
+                    .size(50.dp)
+            )
+        }
+        Row (Modifier
+            .align(Alignment.CenterHorizontally)
+            .padding(5.dp)) {
+            var sec = Timer(60)
+            Text(
+                text = "If you didn't receive code, ",
+                color = Color(207, 207, 207))
+            if (sec!=0) Text(
+                text = "resend after $sec",
+                color = Color(207, 207, 207))
+            else Text(
+                text = "resend",
+                Modifier
+                    .clickable{  },
+                color = Color(5,96,250))
+        }
+        Spacer(Modifier.weight(0.2f))
+        // Кнопка "Авторизации"
+        Button(onClick = { navController.navigate("NewPassword") }, Modifier
+            .weight(0.4f)
+            .padding(20.dp)
+            .fillMaxWidth()
+            .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(Color(207, 207, 207))
+        ) {
+            Text(text = "Set New Password")
+        }
+        Spacer(Modifier.weight(0.8f))
+    }
+}
+
+@Composable
+fun NewPassword(navController: NavHostController) {
+    var password by remember { mutableStateOf("") }
+    var checkpass by remember { mutableStateOf("") }
+    var visibility1 by remember { mutableStateOf(false) }
+    var visibility2 by remember { mutableStateOf(false) }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(Modifier.weight(1f))
+        Column (
+            Modifier
+                .weight(0.7f)
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("New Password",
+                fontSize = 24.sp)
+            Text("Enter new password",
+                color = Color(207,207,207))
+        }
+        // Поле ввода пароля
+        OutlinedTextField(password, {password=it},
+            Modifier
+                .weight(0.6f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility1) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(text = "",
+                    color = Color(207,207,207))
+            },
+            trailingIcon = { Image(painterResource(if (visibility1) R.drawable.eye else R.drawable.close_eye),"",
+                Modifier
+                    .size(20.dp)
+                    .clickable { visibility1 = !visibility1 }
+                    .align(Alignment.End)) }
+        )
+        // Поле ввода пароля повторно
+        OutlinedTextField(checkpass, {checkpass=it},
+            Modifier
+                .weight(0.6f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility2) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Confirm Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(text = "",
+                    color = Color(207,207,207))
+            },
+            trailingIcon = { Image(painterResource(if (visibility2) R.drawable.eye else R.drawable.close_eye),"",
+                Modifier
+                    .size(20.dp)
+                    .clickable { visibility2 = !visibility2 }
+                    .align(Alignment.End)) }
+        )
+        Spacer(Modifier.weight(0.2f))
+        // Кнопка "Авторизации"
+        Button(onClick = {  }, Modifier
+            .weight(0.7f)
+            .padding(20.dp)
+            .fillMaxWidth()
+            .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(if (password==checkpass && password.isNotEmpty() && checkpass.isNotEmpty()) Color(5,96,250)
+            else Color(207, 207, 207))
+        ) {
+            Text(text = "Log In")
+        }
+        Spacer(Modifier.weight(1f))
+    }
+}
+
+@Composable
+fun Home() {
+    Column (Modifier
+        .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+        Text(text = "Home")
+    }
+}
+
+class MaskVisualTransformation(private val mask: String): VisualTransformation {
+    private val specialSymbolsIndices = mask.indices.filter { mask[it] != '#' }
+    override fun filter(text: AnnotatedString): TransformedText {
+        var out = ""
+        var maskIndex = 0
+        text.forEach { char ->
+            while (specialSymbolsIndices.contains(maskIndex)) {
+                out += mask[maskIndex]
+                maskIndex++
+            }
+            out += char
+            maskIndex++
+        }
+        return TransformedText(AnnotatedString(out), offsetTranslator())
+    }
+    private fun offsetTranslator() = object: OffsetMapping {
+        override fun originalToTransformed(offset: Int): Int {
+            val offsetValue = offset.absoluteValue
+            if (offsetValue == 0) return 0
+            var numberOfHashtags = 0
+            val masked = mask.takeWhile {
+                if (it == '#') numberOfHashtags++
+                numberOfHashtags < offsetValue
+            }
+            return masked.length + 1
+        }
+        override fun transformedToOriginal(offset: Int): Int {
+            return mask.take(offset.absoluteValue).count { it == '#' }
+        }
+    }
+}
+
+fun RegistrationInputCheck(name: String, phone: String, email: String, password: String, checkpass: String, license: Boolean): Boolean {
+    val regex = Regex(".*@mail.com")
+    return name.isNotEmpty() &&
+            phone.isNotEmpty() &&
+            email.isNotEmpty() &&
+            regex.containsMatchIn(email) &&
+            password.isNotEmpty() &&
+            checkpass.isNotEmpty() &&
+            password == checkpass && license
+}
+
+fun LoginInputCheck(email: String, password: String): Boolean {
+    val regex = Regex(".*@mail.com")
+    return email.isNotEmpty() &&
+            regex.containsMatchIn(email) &&
+            password.isNotEmpty()
+}
+
+@Composable
+fun Timer(time: Int):Int {
+    var seconds by remember { mutableStateOf(time) }
+    LaunchedEffect(seconds){
+        while (seconds>0){
+            delay(1000)
+            seconds--
+        }
+    }
+    return seconds
+}
