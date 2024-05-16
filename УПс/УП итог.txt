@@ -1,0 +1,1233 @@
+package com.example.atry
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.delay
+import kotlin.math.absoluteValue
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            val navController = rememberNavController()
+            Scaffold(
+                topBar = {TopBar(navController)},
+                bottomBar = {BottomBar(navController)})
+            { paddingValues ->
+                NavHost(navController = navController, startDestination = "Home") {
+                    composable("SignUp") { SignUp(navController) }
+                    composable("LogIn") { LogIn(navController) }
+                    composable("ForgotPassword") { ForgotPassword(navController) }
+                    composable("OTPVerification") { OTPVerification(navController) }
+                    composable("NewPassword") { NewPassword(navController) }
+                    composable("Home") { Home(paddingValues,navController) }
+                    composable("Wallet") { Wallet(paddingValues,navController) }
+                    composable("Track") { Track(paddingValues,navController) }
+                    composable("Profile") { Profile(paddingValues,navController) }
+                    composable("AddPayment") { AddPayment(paddingValues,navController) }
+                    composable("Notification") { Notification(paddingValues,navController) }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SignUp(navController: NavHostController) {
+    val mask = MaskVisualTransformation("+7(###)###-##-##")
+    var visibility1 by remember { mutableStateOf(false) }
+    var visibility2 by remember { mutableStateOf(false) }
+    var text1 by remember { mutableStateOf("By ticking this box, you agree to our") }
+    var text2 by remember { mutableStateOf("Terms and conditions and private policy") }
+    var license by remember {mutableStateOf(false)}
+    var name by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var checkpass by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Column (
+            Modifier
+                .weight(0.7f)
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("Create an account",
+                fontSize = 24.sp)
+            Text("Complete the sign up process to get started",
+                color = Color(207,207,207)
+            )
+        }
+        // Поле ввода имени
+        OutlinedTextField(name, {name=it}, Modifier
+            .weight(0.8f)
+            .padding(5.dp)
+            .fillMaxWidth(),
+            label={
+                Row() {
+                    Text("Full Name",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(text = "Ivanov Ivan",
+                    color = Color(207,207,207))
+            }
+        )
+
+        // Поле ввода номера телефона
+        OutlinedTextField(phone, {if (it.length<11) {phone=it}}, Modifier
+            .weight(0.8f)
+            .padding(5.dp)
+            .fillMaxWidth(),
+            visualTransformation = mask,
+            label={
+                Row() {
+                    Text("Phone Number",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(text = "+7(999)999-99-99",
+                    color = Color(207,207,207))
+            }
+        )
+
+        // Поле ввода электронной почты
+        OutlinedTextField(email, {email=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            label={
+                Row() {
+                    Text("Email Adress",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(text = "*********@mail.com",
+                    color = Color(207,207,207))
+            },
+        )
+
+        // Поле ввода пароля
+        OutlinedTextField(password, {password=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility1) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(text = "",
+                    color = Color(207,207,207))
+            },
+            trailingIcon = { Image(painterResource(if (visibility1) R.drawable.eye else R.drawable.close_eye),"",
+                Modifier
+                    .size(20.dp)
+                    .clickable { visibility1 = !visibility1 }
+                    .align(Alignment.End)) }
+        )
+
+        // Поле ввода пароля повторно
+        OutlinedTextField(checkpass, {checkpass=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility2) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(text = "",
+                    color = Color(207,207,207))
+            },
+            trailingIcon = { Image(painterResource(if (visibility2) R.drawable.eye else R.drawable.close_eye),"",
+                Modifier
+                    .size(20.dp)
+                    .clickable { visibility2 = !visibility2 }
+                    .align(Alignment.End)) }
+        )
+
+        // Галочка для пользовательского соглашения
+        Row(
+            Modifier
+                .weight(0.5f)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(checked = license==true, onCheckedChange = {license=!license})
+            Text(text = "$text1" + "$text2")
+        }
+
+        // Кнопка "Регистрирации"
+        Button(onClick = { if (RegistrationInputCheck(name, phone, email, password, checkpass, license)) navController.navigate("LogIn") },
+            Modifier
+                .weight(1f)
+                .padding(20.dp)
+                .fillMaxWidth()
+                .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(if (RegistrationInputCheck(name, phone, email, password, checkpass, license)) Color(5,96,250)
+            else Color(207, 207, 207))
+        ) {
+            Text(text = "Sign Up")
+        }
+        Column (
+            Modifier
+                .weight(1.2f)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Row () {
+                Text(
+                    text = "Already have an account?",
+                    color = Color(207, 207, 207))
+                Spacer(Modifier
+                    .size(10.dp))
+                Text(
+                    text = "Sign in",Modifier
+                        .clickable{navController.navigate("LogIn")},
+                    color = Color(5,96,250))
+            }
+            Text(
+                text = "or sign in using",
+                modifier = Modifier
+                    .padding(10.dp),
+                color = Color(207, 207, 207))
+            Image(painterResource(R.drawable.google),"",Modifier
+                .size(30.dp))
+        }
+        Spacer(Modifier
+            .weight(0.1f))
+    }
+}
+
+@Composable
+fun LogIn(navController: NavHostController) {
+    var visibility1 by remember { mutableStateOf(false) }
+    var remember by remember {mutableStateOf(false)}
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(Modifier.weight(0.8f))
+        Column (
+            Modifier
+                .weight(0.9f)
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("Welcome Back",
+                fontSize = 24.sp)
+            Text("Fill in your email and password to continue",
+                color = Color(207,207,207))
+        }
+        OutlinedTextField(email, {email=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            label={
+                Row() {
+                    Text("Email Adress",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(text = "*********@mail.com",
+                    color = Color(207,207,207))
+            },
+        )
+
+        // Поле ввода пароля
+        OutlinedTextField(password, {password=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility1) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(text = "",
+                    color = Color(207,207,207))
+            },
+            trailingIcon = { Image(painterResource(if (visibility1) R.drawable.eye else R.drawable.close_eye),"",
+                Modifier
+                    .size(20.dp)
+                    .clickable { visibility1 = !visibility1 }
+                    .align(Alignment.End)) }
+        )
+        Row(
+            Modifier
+                .padding(5.dp)
+                .weight(0.5f)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row (verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(checked = remember==true, onCheckedChange = {remember=!remember})
+                Text(text = "Remember password")
+            }
+            Row () {
+                Text(text = "Forgot Password?",Modifier
+                    .clickable{navController.navigate("ForgotPassword")},
+                    color = Color(5,96,250))
+            }
+        }
+        Spacer(Modifier.weight(1f))
+        // Кнопка "Авторизации"
+        Button(onClick = { navController.navigate("Home") }, Modifier
+            .weight(1f)
+            .padding(20.dp)
+            .fillMaxWidth()
+            .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(if (LoginInputCheck(email, password)) Color(5,96,250)
+            else Color(207, 207, 207))
+        ) {
+            Text(text = "Log In")
+        }
+        Column (
+            Modifier
+                .weight(1.2f)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Row () {
+                Text(
+                    text = "Don't have an account?",
+                    color = Color(207, 207, 207))
+                Spacer(Modifier
+                    .size(10.dp))
+                Text(
+                    text = "Sign Up",Modifier
+                        .clickable{navController.navigate("SignUp")},
+                    color = Color(5,96,250))
+            }
+            Text(
+                text = "or log in using",
+                modifier = Modifier
+                    .padding(10.dp),
+                color = Color(207, 207, 207))
+            Image(painterResource(R.drawable.google),"",Modifier
+                .size(30.dp))
+        }
+        Spacer(Modifier.weight(0.8f))
+    }
+}
+
+@Composable
+fun ForgotPassword(navController: NavHostController) {
+    var email by remember { mutableStateOf("") }
+    val regex = Regex(".*@mail.com")
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(Modifier.weight(1f))
+        Column (
+            Modifier
+                .weight(0.9f)
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("Forgot Password",
+                fontSize = 24.sp)
+            Text("Enter your email address",
+                color = Color(207,207,207))
+        }
+        OutlinedTextField(email, {email=it},
+            Modifier
+                .weight(0.8f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            label={
+                Row() {
+                    Text("Email Adress",
+                        color = Color(207,207,207))
+                }
+            },
+            placeholder = {
+                Text(text = "*********@mail.com",
+                    color = Color(207,207,207))
+            },
+        )
+        Spacer(Modifier.weight(1f))
+        // Кнопка "Авторизации"
+        Button(onClick = { navController.navigate("OTPVerification") }, Modifier
+            .weight(1f)
+            .padding(20.dp)
+            .fillMaxWidth()
+            .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(if (regex.containsMatchIn(email)) Color(5,96,250)
+            else Color(207, 207, 207))
+        ) {
+            Text(text = "Send OTP")
+        }
+        Row (Modifier
+            .align(Alignment.CenterHorizontally)) {
+            Text(
+                text = "Remember password? Back to",
+                color = Color(207, 207, 207))
+            Spacer(Modifier
+                .size(10.dp))
+            Text(
+                text = "Sign In",Modifier
+                    .clickable{navController.navigate("LogIn")},
+                color = Color(5,96,250))
+        }
+        Spacer(Modifier.weight(2.5f))
+    }
+}
+
+@Composable
+fun OTPVerification(navController: NavHostController) {
+    var numb1 by remember { mutableStateOf("") }
+    var numb2 by remember { mutableStateOf("") }
+    var numb3 by remember { mutableStateOf("") }
+    var numb4 by remember { mutableStateOf("") }
+    var numb5 by remember { mutableStateOf("") }
+    var numb6 by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(Modifier.weight(0.8f))
+        Column (
+            Modifier
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("OTP Verification",
+                fontSize = 24.sp)
+            Text("Enter the 6 digit numbers sent to your email",
+                color = Color(207,207,207))
+        }
+        Spacer(Modifier.weight(0.2f))
+        Row (
+            Modifier
+                .padding(5.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            OutlinedTextField(numb1, {if (it.length<2) numb1=it},
+                Modifier
+                    .focusRequester(focusRequester = FocusRequester())
+                    .size(50.dp)
+            )
+            OutlinedTextField(numb2, {if (it.length<2) numb2=it},
+                Modifier
+                    .size(50.dp)
+            )
+            OutlinedTextField(numb3, {if (it.length<2) numb3=it},
+                Modifier
+                    .size(50.dp)
+            )
+            OutlinedTextField(numb4, {if (it.length<2) numb4=it},
+                Modifier
+                    .size(50.dp)
+            )
+            OutlinedTextField(numb5, {if (it.length<2) numb5=it},
+                Modifier
+                    .size(50.dp)
+            )
+            OutlinedTextField(numb6, {if (it.length<2) numb6=it},
+                Modifier
+                    .size(50.dp)
+            )
+        }
+        Row (
+            Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(5.dp)) {
+            var sec = Timer(60)
+            Text(
+                text = "If you didn't receive code, ",
+                color = Color(207, 207, 207))
+            if (sec!=0) Text(
+                text = "resend after $sec",
+                color = Color(207, 207, 207))
+            else Text(
+                text = "resend",
+                Modifier
+                    .clickable{  },
+                color = Color(5,96,250))
+        }
+        Spacer(Modifier.weight(0.2f))
+        // Кнопка "Авторизации"
+        Button(onClick = { navController.navigate("NewPassword") }, Modifier
+            .weight(0.4f)
+            .padding(20.dp)
+            .fillMaxWidth()
+            .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(Color(207, 207, 207))
+        ) {
+            Text(text = "Set New Password")
+        }
+        Spacer(Modifier.weight(0.8f))
+    }
+}
+
+@Composable
+fun NewPassword(navController: NavHostController) {
+    var password by remember { mutableStateOf("") }
+    var checkpass by remember { mutableStateOf("") }
+    var visibility1 by remember { mutableStateOf(false) }
+    var visibility2 by remember { mutableStateOf(false) }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(Modifier.weight(1f))
+        Column (
+            Modifier
+                .weight(0.7f)
+                .padding(5.dp)
+                .fillMaxWidth()) {
+            Text("New Password",
+                fontSize = 24.sp)
+            Text("Enter new password",
+                color = Color(207,207,207))
+        }
+        // Поле ввода пароля
+        OutlinedTextField(password, {password=it},
+            Modifier
+                .weight(0.6f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility1) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(text = "",
+                    color = Color(207,207,207))
+            },
+            trailingIcon = { Image(painterResource(if (visibility1) R.drawable.eye else R.drawable.close_eye),"",
+                Modifier
+                    .size(20.dp)
+                    .clickable { visibility1 = !visibility1 }
+                    .align(Alignment.End)) }
+        )
+        // Поле ввода пароля повторно
+        OutlinedTextField(checkpass, {checkpass=it},
+            Modifier
+                .weight(0.6f)
+                .padding(5.dp)
+                .fillMaxWidth(),
+            visualTransformation = if (visibility2) VisualTransformation.None else PasswordVisualTransformation(),
+            label={
+                Text("Confirm Password",
+                    color = Color(207,207,207))
+            },
+            placeholder = {
+                Text(text = "",
+                    color = Color(207,207,207))
+            },
+            trailingIcon = { Image(painterResource(if (visibility2) R.drawable.eye else R.drawable.close_eye),"",
+                Modifier
+                    .size(20.dp)
+                    .clickable { visibility2 = !visibility2 }
+                    .align(Alignment.End)) }
+        )
+        Spacer(Modifier.weight(0.2f))
+        // Кнопка "Авторизации"
+        Button(onClick = {  }, Modifier
+            .weight(0.7f)
+            .padding(20.dp)
+            .fillMaxWidth()
+            .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(if (password==checkpass && password.isNotEmpty() && checkpass.isNotEmpty()) Color(5,96,250)
+            else Color(207, 207, 207))
+        ) {
+            Text(text = "Log In")
+        }
+        Spacer(Modifier.weight(1f))
+    }
+}
+
+@Composable
+fun Home(paddingValues: PaddingValues, navController: NavHostController) {
+    Column (
+        Modifier
+            .padding(paddingValues)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+    }
+}
+
+@Composable
+fun Wallet(paddingValues: PaddingValues, navController: NavHostController) {
+    Column (
+        Modifier
+            .padding(paddingValues)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+    }
+}
+
+@Composable
+fun Track(paddingValues: PaddingValues, navController: NavHostController) {
+    Column (
+        Modifier
+            .padding(paddingValues)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+    }
+}
+
+@Composable
+fun Profile(paddingValues: PaddingValues, navController: NavHostController) {
+    val name by remember { mutableStateOf("Ken") }
+    val money by remember { mutableStateOf(0f) }
+    var visibility by remember { mutableStateOf(false) }
+    var mode by remember { mutableStateOf(false) }
+    LazyColumn (
+        Modifier
+            .padding(paddingValues)
+            .fillMaxWidth()) {
+        items(1){
+            Spacer(Modifier
+                .size(8.dp))
+            Row (
+                Modifier
+                    .padding(5.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(1f)) {
+                    Image(painterResource(R.drawable.profile_photo ),"",
+                        Modifier
+                            .size(70.dp))
+                }
+                Column(Modifier
+                    .weight(4f)) {
+                    Text(text = "Hello $name",
+                        fontSize = 18.sp)
+                    Row () {
+                        Text(text = "Current balance: ")
+                        Text(text = "${if (visibility) money else "****"}",
+                            color = Color(5, 96, 250))
+                    }
+                }
+                Column(Modifier
+                    .weight(0.5f)) {
+                    Image(painterResource(if (visibility) R.drawable.eye else R.drawable.close_eye),"",
+                        Modifier
+                            .size(20.dp)
+                            .clickable { visibility = !visibility }
+                            .align(Alignment.End))
+                }
+            }
+            Row(
+                Modifier
+                    .padding(5.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "Enable dark Mode",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold)
+                Switch(mode, {mode=!mode},
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Color(255,255,255),
+                        checkedTrackColor = Color(5, 96, 250),
+                        checkedBorderColor = Color(5, 96, 250),
+                        uncheckedThumbColor = Color(255,255,255),
+                        uncheckedTrackColor = Color(205,205,205,205),
+                        uncheckedBorderColor = Color(205,205,205,205)
+                    )
+                )
+            }
+            Row (Modifier
+                .height(70.dp)
+                .padding(5.dp)
+                .clickable { }
+                .border(2.dp, Color(205, 205, 205, 205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(0.7f)) {
+                    Image(painterResource(R.drawable.icon_edit_profile),"",
+                        Modifier
+                            .size(20.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Edit Profile",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium )
+                    Text(text = "Name, phone no, address, email ...",
+                        color = Color(205,205,205,205))
+                }
+                Column(Modifier
+                    .weight(0.4f)) {
+                    Icon(
+                        Icons.Default.KeyboardArrowRight, "", Modifier
+                            .align(Alignment.Start)
+                            .size(20.dp)
+                    )
+                }
+            }
+            Row (Modifier
+                .height(70.dp)
+                .padding(5.dp)
+                .clickable { }
+                .border(2.dp, Color(205, 205, 205, 205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(0.7f)) {
+                    Image(painterResource(R.drawable.icon_state_reports),"",
+                        Modifier
+                            .size(20.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Statements & Reports",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium )
+                    Text(text = "Download transaction details, orders, deliveries",
+                        color = Color(205,205,205,205))
+                }
+                Column(Modifier
+                    .weight(0.4f)) {
+                    Icon(
+                        Icons.Default.KeyboardArrowRight, "", Modifier
+                            .align(Alignment.Start)
+                            .size(20.dp)
+                    )
+                }
+            }
+            Row (Modifier
+                .height(70.dp)
+                .padding(5.dp)
+                .clickable { navController.navigate("Notification") }
+                .border(2.dp, Color(205, 205, 205, 205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(0.7f)) {
+                    Image(painterResource(R.drawable.icon_notification),"",
+                        Modifier
+                            .size(20.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Notification Settings",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium )
+                    Text(text = "Mute, unmute, set location & tracking setting",
+                        color = Color(205,205,205,205))
+                }
+                Column(Modifier
+                    .weight(0.4f)) {
+                    Icon(
+                        Icons.Default.KeyboardArrowRight, "", Modifier
+                            .align(Alignment.Start)
+                            .size(20.dp)
+                    )
+                }
+            }
+            Row (Modifier
+                .height(70.dp)
+                .padding(5.dp)
+                .clickable { navController.navigate("AddPayment") }
+                .border(2.dp, Color(205, 205, 205, 205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(0.7f)) {
+                    Image(painterResource(R.drawable.icon_card_bank),"",
+                        Modifier
+                            .size(20.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Card and Bank account settings",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium )
+                    Text(text = "Change cards, delete card details",
+                        color = Color(205,205,205,205))
+                }
+                Column(Modifier
+                    .weight(0.4f)) {
+                    Icon(
+                        Icons.Default.KeyboardArrowRight, "", Modifier
+                            .align(Alignment.Start)
+                            .size(20.dp)
+                    )
+                }
+            }
+            Row (Modifier
+                .height(70.dp)
+                .padding(5.dp)
+                .clickable { }
+                .border(2.dp, Color(205, 205, 205, 205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(0.7f)) {
+                    Image(painterResource(R.drawable.icon_referrals),"",
+                        Modifier
+                            .size(20.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Referrals",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium )
+                    Text(text = "Know more about us, terms and conditions",
+                        color = Color(205,205,205,205))
+                }
+                Column(Modifier
+                    .weight(0.4f)) {
+                    Icon(
+                        Icons.Default.KeyboardArrowRight, "", Modifier
+                            .align(Alignment.Start)
+                            .size(20.dp)
+                    )
+                }
+            }
+            Row (Modifier
+                .height(70.dp)
+                .padding(5.dp)
+                .clickable { }
+                .border(2.dp, Color(205, 205, 205, 205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(0.7f)) {
+                    Image(painterResource(R.drawable.icon_about),"",
+                        Modifier
+                            .size(20.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "About Us",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium )
+                    Text(text = "Name, phone no, address, email ...",
+                        color = Color(205,205,205,205))
+                }
+                Column(Modifier
+                    .weight(0.4f)) {
+                    Icon(
+                        Icons.Default.KeyboardArrowRight, "", Modifier
+                            .align(Alignment.Start)
+                            .size(20.dp)
+                    )
+                }
+            }
+            Row (Modifier
+                .height(70.dp)
+                .padding(5.dp)
+                .clickable { }
+                .border(2.dp, Color(205, 205, 205, 205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(0.7f)) {
+                    Image(painterResource(R.drawable.icon_log_out),"",
+                        Modifier
+                            .size(20.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Log Out",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium )
+                }
+                Column(Modifier
+                    .weight(0.4f)) {
+                    Icon(
+                        Icons.Default.KeyboardArrowRight, "", Modifier
+                            .align(Alignment.Start)
+                            .size(20.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun AddPayment(paddingValues: PaddingValues, navController: NavHostController) {
+    Column (Modifier
+        .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+
+    }
+}
+
+@Composable
+fun Notification(paddingValues: PaddingValues, navController: NavHostController) {
+    Column (
+        Modifier
+            .padding(paddingValues)
+            .fillMaxHeight()
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+        Image(painterResource(R.drawable.icon_notification_big),"",
+            Modifier
+                .size(100.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+        Text(text = "You have no notifications")
+    }
+}
+
+@Composable
+fun TopBar(navController: NavHostController) {
+    val currentRoute = navController.currentBackStackEntry?.destination?.route
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    when (val currentRoute = navBackStackEntry?.destination?.route) { }
+    if (PageCheck(currentRoute)){ }
+    else {
+        Column (Modifier
+            .fillMaxWidth()) {
+            Row(
+                Modifier
+                    .height(45.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.Center){
+                if (currentRoute=="Home") Text(text = "")
+                if (currentRoute=="Wallet") Text(text = "Wallet",
+                    fontSize = 23.sp,
+                    color = Color(205,205,205,205))
+                if (currentRoute=="Track") Text(text = "")
+                if (currentRoute=="Profile") Text(text = "Profile",
+                    fontSize = 23.sp,
+                    color = Color(205,205,205,205))
+                if (currentRoute=="AddPayment") {
+                    Image(painterResource(R.drawable.icon_blue_errow_left),"",
+                        Modifier
+                            .size(24.dp)
+                            .clickable { navController.navigate("Profile") }
+                            .weight(0.1f))
+                    Text(text = "Add Payment method",Modifier
+                        .weight(1f),
+                        textAlign = TextAlign.Center,
+                        fontSize = 23.sp,
+                        color = Color(205, 205, 205, 205)
+                    )
+                }
+                if (currentRoute=="Notification") {
+                    Image(painterResource(R.drawable.icon_blue_errow_left),"",
+                        Modifier
+                            .size(24.dp)
+                            .clickable { navController.navigate("Profile") }
+                            .weight(0.1f))
+                    Text(
+                        text = "Notification",Modifier
+                            .weight(1f),
+                        textAlign = TextAlign.Center,
+                        fontSize = 23.sp,
+                        color = Color(205, 205, 205, 205)
+                    )
+                }
+                else {
+                }
+            }
+            Spacer (Modifier
+                .size(5.dp))
+            if (currentRoute=="Home" || currentRoute=="Track"){
+            }
+            else {
+                Divider(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(3.dp),
+                    color = Color(205,205,205,205))
+            }
+        }
+    }
+}
+
+@Composable
+fun BottomBar(navController: NavHostController) {
+    val currentRoute = navController.currentBackStackEntry?.destination?.route
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    when (val currentRoute = navBackStackEntry?.destination?.route) { }
+    if (PageCheck(currentRoute)) { }
+    else {
+        Divider(
+            Modifier
+                .fillMaxWidth()
+                .height(3.dp),
+            color = Color(205,205,205,205))
+        Row(
+            Modifier
+                .height(60.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround){
+            Column (Modifier
+                .fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "", Modifier
+                    .padding(0.dp, 3.dp, 0.dp, 0.dp)
+                    .height(3.dp)
+                    .width(40.dp)
+                    .background(
+                        if (currentRoute == "Home") Color(5, 96, 250)
+                        else Color(0, 0, 0, 0)
+                    ))
+                Spacer(Modifier
+                    .size(7.dp))
+                Image(painterResource(R.drawable.icon_home),"",
+                    Modifier
+                        .size(24.dp)
+                        .clickable { navController.navigate("Home") }
+                        .weight(0.1f))
+                Text(text = "Home",
+                    color = if (currentRoute=="Home") Color(5,96,250)
+                    else Color(205,205,205,205))
+            }
+            Column (Modifier
+                .fillMaxHeight(),horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "", Modifier
+                    .padding(0.dp, 3.dp, 0.dp, 0.dp)
+                    .height(3.dp)
+                    .width(40.dp)
+                    .background(
+                        if (currentRoute == "Wallet") Color(5, 96, 250)
+                        else Color(0, 0, 0, 0)
+                    ))
+                Spacer(Modifier
+                    .size(7.dp))
+                Image(painterResource(R.drawable.icon_wallet),"",
+                    Modifier
+                        .size(24.dp)
+                        .clickable { navController.navigate("Wallet") }
+                        .weight(0.1f))
+                Text(text = "Wallet",
+                    color = if (currentRoute=="Wallet") Color(5,96,250)
+                    else Color(205,205,205,205))
+            }
+            Column (Modifier
+                .fillMaxHeight(),horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "", Modifier
+                    .padding(0.dp, 3.dp, 0.dp, 0.dp)
+                    .height(3.dp)
+                    .width(40.dp)
+                    .background(
+                        if (currentRoute == "Track") Color(5, 96, 250)
+                        else Color(0, 0, 0, 0)
+                    ))
+                Spacer(Modifier
+                    .size(7.dp))
+                Image(painterResource(R.drawable.icon_track),"",
+                    Modifier
+                        .size(24.dp)
+                        .clickable { navController.navigate("Track") }
+                        .weight(0.1f))
+                Text(text = "Track",
+                    color = if (currentRoute=="Track") Color(5,96,250)
+                    else Color(205,205,205,205))
+            }
+            Column (Modifier
+                .fillMaxHeight(),horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "", Modifier
+                    .padding(0.dp, 3.dp, 0.dp, 0.dp)
+                    .height(3.dp)
+                    .width(40.dp)
+                    .background(
+                        if (currentRoute == "Profile") Color(5, 96, 250)
+                        else Color(0, 0, 0, 0)
+                    ))
+                Spacer(Modifier
+                    .size(7.dp))
+                Image(painterResource(R.drawable.icon_profile),"",
+                    Modifier
+                        .size(24.dp)
+                        .clickable { navController.navigate("Profile") }
+                        .weight(0.1f))
+                Text(text = "Profile",
+                    color = if (currentRoute=="Profile") Color(5,96,250)
+                    else Color(205,205,205,205))
+            }
+        }
+    }
+
+}
+
+class MaskVisualTransformation(private val mask: String): VisualTransformation {
+    private val specialSymbolsIndices = mask.indices.filter { mask[it] != '#' }
+    override fun filter(text: AnnotatedString): TransformedText {
+        var out = ""
+        var maskIndex = 0
+        text.forEach { char ->
+            while (specialSymbolsIndices.contains(maskIndex)) {
+                out += mask[maskIndex]
+                maskIndex++
+            }
+            out += char
+            maskIndex++
+        }
+        return TransformedText(AnnotatedString(out), offsetTranslator())
+    }
+    private fun offsetTranslator() = object: OffsetMapping {
+        override fun originalToTransformed(offset: Int): Int {
+            val offsetValue = offset.absoluteValue
+            if (offsetValue == 0) return 0
+            var numberOfHashtags = 0
+            val masked = mask.takeWhile {
+                if (it == '#') numberOfHashtags++
+                numberOfHashtags < offsetValue
+            }
+            return masked.length + 1
+        }
+        override fun transformedToOriginal(offset: Int): Int {
+            return mask.take(offset.absoluteValue).count { it == '#' }
+        }
+    }
+}
+
+fun RegistrationInputCheck(name: String, phone: String, email: String, password: String, checkpass: String, license: Boolean): Boolean {
+    val regex = Regex(".*@mail.com")
+    return name.isNotEmpty() &&
+            phone.isNotEmpty() &&
+            email.isNotEmpty() &&
+            regex.containsMatchIn(email) &&
+            password.isNotEmpty() &&
+            checkpass.isNotEmpty() &&
+            password == checkpass && license
+}
+
+fun LoginInputCheck(email: String, password: String): Boolean {
+    val regex = Regex(".*@mail.com")
+    return email.isNotEmpty() &&
+            regex.containsMatchIn(email) &&
+            password.isNotEmpty()
+}
+
+@Composable
+fun Timer(time: Int):Int {
+    var seconds by remember { mutableStateOf(time) }
+    LaunchedEffect(seconds){
+        while (seconds>0){
+            delay(1000)
+            seconds--
+        }
+    }
+    return seconds
+}
+
+fun PageCheck(currentRoute: String?): Boolean {
+    return currentRoute == "SignUp" ||
+            currentRoute == "LogIn" ||
+            currentRoute == "ForgotPassword" ||
+            currentRoute == "OTPVerification" ||
+            currentRoute == "NewPassword"
+}
