@@ -1,0 +1,285 @@
+LazyColumn (Modifier
+        .padding(paddingValues)
+        .fillMaxWidth()) {
+        items(1){
+            Spacer(Modifier
+                .height(20.dp))
+            Row (
+                Modifier
+                    .padding(5.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(1f)) {
+                    Icon(
+                        Icons.Default.AccountCircle, "", Modifier
+                            .size(50.dp)
+                    )
+                }
+                Column(Modifier
+                    .weight(4f)) {
+                    Text(text = "Hello $name",
+                        fontSize = 18.sp)
+                    Row () {
+                        Text(text = "Current balance: ")
+                        Text(text = "$money",
+                            color = Color(5, 96, 250))
+                    }
+                }
+                Column(Modifier
+                    .weight(0.5f)) {
+//                Image(painterResource(if (visibility) R.drawable.eye else R.drawable.close_eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable { visibility = !visibility }
+//                        .align(Alignment.End))
+                }
+            }
+            Row(
+                Modifier
+                    .padding(5.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "Enable dark Mode",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold)
+                Switch(mode, {mode=!mode},
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Color(255,255,255),
+                        checkedTrackColor = Color(5, 96, 250),
+                        uncheckedThumbColor = Color(255,255,255),
+                        uncheckedTrackColor = Color(205,205,205,205)
+                    )
+                )
+            }
+            Row (Modifier
+                .padding(5.dp)
+                .border(2.dp, Color(205,205,205,205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(1f)) {
+                    Icon(
+                        Icons.Default.AccountCircle, "", Modifier
+                            .align(Alignment.Start)
+                            .size(50.dp)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Edit Profile",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold)
+                    Text(text = "Name, phone no, address, email ...",
+                        color = Color(205,205,205,205))
+                }
+                Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+                }
+            }
+            Row (Modifier
+                .padding(5.dp)
+                .border(2.dp, Color(205,205,205,205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(1f)) {
+                    Icon(
+                        Icons.Default.AccountCircle, "", Modifier
+                            .align(Alignment.Start)
+                            .size(50.dp)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Statements & Reports",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold)
+                    Text(text = "Download transaction details, orders, deliveries",
+                        color = Color(205,205,205,205))
+                }
+                Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+                }
+            }
+            Row (Modifier
+                .padding(5.dp)
+                .border(2.dp, Color(205,205,205,205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(1f)) {
+                    Icon(
+                        Icons.Default.AccountCircle, "", Modifier
+                            .align(Alignment.Start)
+                            .size(50.dp)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Notification Settings",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold)
+                    Text(text = "Mute, unmute, set location & tracking setting",
+                        color = Color(205,205,205,205))
+                }
+                Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+                }
+            }
+            Row (Modifier
+                .padding(5.dp)
+                .border(2.dp, Color(205,205,205,205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(1f)) {
+                    Icon(
+                        Icons.Default.AccountCircle, "", Modifier
+                            .align(Alignment.Start)
+                            .size(50.dp)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Card and Bank account settings",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold)
+                    Text(text = "Change cards, delete card details",
+                        color = Color(205,205,205,205))
+                }
+                Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+                }
+            }
+            Row (Modifier
+                .padding(5.dp)
+                .border(2.dp, Color(205,205,205,205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(1f)) {
+                    Icon(
+                        Icons.Default.AccountCircle, "", Modifier
+                            .align(Alignment.Start)
+                            .size(50.dp)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Referrals",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold)
+                    Text(text = "Know more about us, terms and conditions",
+                        color = Color(205,205,205,205))
+                }
+                Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+                }
+            }
+            Row (Modifier
+                .padding(5.dp)
+                .border(2.dp, Color(205,205,205,205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(1f)) {
+                    Icon(
+                        Icons.Default.AccountCircle, "", Modifier
+                            .align(Alignment.Start)
+                            .size(50.dp)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "About Us",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold)
+                    Text(text = "Name, phone no, address, email ...",
+                        color = Color(205,205,205,205))
+                }
+                Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+                }
+            }
+            Row (Modifier
+                .padding(5.dp)
+                .border(2.dp, Color(205,205,205,205))
+                .padding(5.dp)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier
+                    .weight(1f)) {
+                    Icon(
+                        Icons.Default.AccountCircle, "", Modifier
+                            .align(Alignment.Start)
+                            .size(50.dp)
+                    )
+                }
+                Column(Modifier
+                    .weight(5f)) {
+                    Text(text = "Log Out",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold)
+                }
+                Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+Button(onClick = {},
+            shape = RoundedCornerShape(5.dp),     // прямоугольная кнопка
+            modifier = Modifier.padding(10.dp)
+        ){ Text("Button 1", fontSize = 28.sp) }

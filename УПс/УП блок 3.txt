@@ -1,0 +1,503 @@
+val navController= rememberNavController()
+            Scaffold(
+                topBar = {TopBar(navController)},
+                bottomBar = {BottomBar(navController)})
+            { paddingValues ->
+                NavHost(navController = navController, startDestination = "Home") {
+                    composable("Home") { Home(paddingValues,navController) }
+                    composable("Wallet") { Wallet(paddingValues,navController) }
+                    composable("Track") { Track(paddingValues,navController) }
+                    composable("Profile") { Profile(paddingValues,navController) }
+                    composable("AddPayment") { AddPayment(paddingValues,navController) }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun Home(paddingValues: PaddingValues, navController: NavHostController) {
+    Column (
+        Modifier
+            .padding(paddingValues)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+    }
+}
+
+@Composable
+fun Wallet(paddingValues: PaddingValues, navController: NavHostController) {
+    Column (
+        Modifier
+            .padding(paddingValues)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+    }
+}
+
+@Composable
+fun Track(paddingValues: PaddingValues, navController: NavHostController) {
+    Column (
+        Modifier
+            .padding(paddingValues)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+    }
+}
+
+@Composable
+fun Profile(paddingValues: PaddingValues, navController: NavHostController) {
+    val name by remember { mutableStateOf("Ken") }
+    val money by remember { mutableStateOf(0f) }
+    var visibility by remember { mutableStateOf(false) }
+    var mode by remember { mutableStateOf(false) }
+    Column (
+        Modifier
+            .padding(paddingValues)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+        Row (
+            Modifier
+                .padding(5.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier
+                .weight(1f)) {
+                Icon(
+                    Icons.Default.AccountCircle, "", Modifier
+                        .size(50.dp)
+                )
+            }
+            Column(Modifier
+                .weight(4f)) {
+                Text(text = "Hello $name",
+                    fontSize = 18.sp)
+                Row () {
+                    Text(text = "Current balance: ")
+                    Text(text = "$money",
+                        color = Color(5, 96, 250))
+                }
+            }
+            Column(Modifier
+                .weight(0.5f)) {
+//                Image(painterResource(if (visibility) R.drawable.eye else R.drawable.close_eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable { visibility = !visibility }
+//                        .align(Alignment.End))
+            }
+        }
+        Row(
+            Modifier
+                .padding(5.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "Enable dark Mode",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold)
+            Switch(mode, {mode=!mode},
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color(255,255,255),
+                    checkedTrackColor = Color(5, 96, 250),
+                    uncheckedThumbColor = Color(255,255,255),
+                    uncheckedTrackColor = Color(205,205,205,205)
+                )
+            )
+        }
+        Row (Modifier
+            .padding(5.dp)
+            .clickable { }
+            .border(2.dp, Color(205, 205, 205, 205))
+            .padding(5.dp)
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier
+                .weight(1f)) {
+                Icon(
+                    Icons.Default.AccountCircle, "", Modifier
+                        .align(Alignment.Start)
+                        .size(50.dp)
+                )
+            }
+            Column(Modifier
+                .weight(5f)) {
+                Text(text = "Edit Profile",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium )
+                Text(text = "Name, phone no, address, email ...",
+                    color = Color(205,205,205,205))
+            }
+            Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+            }
+        }
+        Row (Modifier
+            .padding(5.dp)
+            .clickable { }
+            .border(2.dp, Color(205, 205, 205, 205))
+            .padding(5.dp)
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier
+                .weight(1f)) {
+                Icon(
+                    Icons.Default.AccountCircle, "", Modifier
+                        .align(Alignment.Start)
+                        .size(50.dp)
+                )
+            }
+            Column(Modifier
+                .weight(5f)) {
+                Text(text = "Statements & Reports",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium )
+                Text(text = "Download transaction details, orders, deliveries",
+                    color = Color(205,205,205,205))
+            }
+            Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+            }
+        }
+        Row (Modifier
+            .padding(5.dp)
+            .clickable { }
+            .border(2.dp, Color(205, 205, 205, 205))
+            .padding(5.dp)
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier
+                .weight(1f)) {
+                Icon(
+                    Icons.Default.AccountCircle, "", Modifier
+                        .align(Alignment.Start)
+                        .size(50.dp)
+                )
+            }
+            Column(Modifier
+                .weight(5f)) {
+                Text(text = "Notification Settings",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium )
+                Text(text = "Mute, unmute, set location & tracking setting",
+                    color = Color(205,205,205,205))
+            }
+            Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+            }
+        }
+        Row (Modifier
+            .padding(5.dp)
+            .clickable { navController.navigate("AddPayment") }
+            .border(2.dp, Color(205, 205, 205, 205))
+            .padding(5.dp)
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier
+                .weight(1f)) {
+                Icon(
+                    Icons.Default.AccountCircle, "", Modifier
+                        .align(Alignment.Start)
+                        .size(50.dp)
+                )
+            }
+            Column(Modifier
+                .weight(5f)) {
+                Text(text = "Card and Bank account settings",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium )
+                Text(text = "Change cards, delete card details",
+                    color = Color(205,205,205,205))
+            }
+            Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .align(Alignment.End))
+            }
+        }
+        Row (Modifier
+            .padding(5.dp)
+            .clickable { }
+            .border(2.dp, Color(205, 205, 205, 205))
+            .padding(5.dp)
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier
+                .weight(1f)) {
+                Icon(
+                    Icons.Default.AccountCircle, "", Modifier
+                        .align(Alignment.Start)
+                        .size(50.dp)
+                )
+            }
+            Column(Modifier
+                .weight(5f)) {
+                Text(text = "Referrals",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium )
+                Text(text = "Know more about us, terms and conditions",
+                    color = Color(205,205,205,205))
+            }
+            Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+            }
+        }
+        Row (Modifier
+            .padding(5.dp)
+            .clickable { }
+            .border(2.dp, Color(205, 205, 205, 205))
+            .padding(5.dp)
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier
+                .weight(1f)) {
+                Icon(
+                    Icons.Default.AccountCircle, "", Modifier
+                        .align(Alignment.Start)
+                        .size(50.dp)
+                )
+            }
+            Column(Modifier
+                .weight(5f)) {
+                Text(text = "About Us",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium )
+                Text(text = "Name, phone no, address, email ...",
+                    color = Color(205,205,205,205))
+            }
+            Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .align(Alignment.End))
+            }
+        }
+        Row (Modifier
+            .padding(5.dp)
+            .clickable { }
+            .border(2.dp, Color(205, 205, 205, 205))
+            .padding(5.dp)
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier
+                .weight(1f)) {
+                Icon(
+                    Icons.Default.AccountCircle, "", Modifier
+                        .align(Alignment.Start)
+                        .size(50.dp)
+                )
+            }
+            Column(Modifier
+                .weight(5f)) {
+                Text(text = "Log Out",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium )
+            }
+            Column() {
+//                Image(painterResource(R.drawable.eye),"",
+//                    Modifier
+//                        .size(20.dp)
+//                        .clickable {  }
+//                        .(Alignment.End))
+            }
+        }
+    }
+}
+
+@Composable
+fun AddPayment(paddingValues: PaddingValues, navController: NavHostController) {
+    Column (Modifier
+        .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+
+    }
+}
+
+@Composable
+fun Notification(paddingValues: PaddingValues, navController: NavHostController) {
+    Column (
+        Modifier
+            .padding(paddingValues)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+        Icon(Icons.Default.Notifications, "", Modifier
+            .weight(0.1f)
+            .clickable { })
+        Text(text = "You have no notifications")
+    }
+}
+
+@Composable
+fun TopBar(navController: NavHostController) {
+    val currentRoute = navController.currentBackStackEntry?.destination?.route
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    when (val currentRoute = navBackStackEntry?.destination?.route) { }
+    Column (Modifier
+        .fillMaxWidth()) {
+        Row(
+            Modifier
+                .height(60.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.Bottom,
+            horizontalArrangement = Arrangement.Center){
+            if (currentRoute=="Home") Text(text = "")
+            if (currentRoute=="Wallet") Text(text = "Wallet",
+                fontSize = 23.sp,
+                color = Color(205,205,205,205))
+            if (currentRoute=="Track") Text(text = "")
+            if (currentRoute=="Profile") Text(text = "Profile",
+                fontSize = 23.sp,
+                color = Color(205,205,205,205))
+            if (currentRoute=="AddPayment") {
+                Icon(Icons.Default.KeyboardArrowLeft, "",Modifier
+                    .clickable{ navController.navigate("Profile") }
+                    .weight(0.1f)
+                    .clickable { })
+                Text(text = "Add Payment method",Modifier
+                    .weight(1f),
+                    textAlign = TextAlign.Center,
+                    fontSize = 23.sp,
+                    color = Color(205, 205, 205, 205)
+                )
+            }
+            if (currentRoute=="Notification") {
+                Icon(Icons.Default.KeyboardArrowLeft, "", Modifier
+                    .weight(0.1f)
+                    .clickable {})
+                Text(
+                    text = "Notification",Modifier
+                        .weight(1f),
+                    textAlign = TextAlign.Center,
+                    fontSize = 23.sp,
+                    color = Color(205, 205, 205, 205)
+                )
+            }
+        }
+        Spacer(Modifier
+            .size(5.dp))
+    }
+}
+
+@Composable
+fun BottomBar(navController: NavHostController) {
+    val currentRoute = navController.currentBackStackEntry?.destination?.route
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    when (val currentRoute = navBackStackEntry?.destination?.route) { }
+    Divider(
+        Modifier
+            .fillMaxWidth()
+            .height(3.dp),
+        color = Color(205,205,205,205))
+    Row(
+        Modifier
+            .height(60.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround){
+        Column (Modifier
+            .fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "", Modifier
+                .padding(0.dp, 3.dp, 0.dp, 0.dp)
+                .height(3.dp)
+                .width(40.dp)
+                .background(
+                    if (currentRoute == "Home") Color(5, 96, 250)
+                    else Color(0, 0, 0, 0)
+                ))
+            Spacer(Modifier
+                .size(7.dp))
+            Icon(Icons.Default.Home,"",Modifier
+                .clickable{navController.navigate("Home")})
+            Text(text = "Home",
+                color = if (currentRoute=="Home") Color(5,96,250)
+                else Color(205,205,205,205))
+        }
+        Column (Modifier
+            .fillMaxHeight(),horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "", Modifier
+                .padding(0.dp, 3.dp, 0.dp, 0.dp)
+                .height(3.dp)
+                .width(40.dp)
+                .background(
+                    if (currentRoute == "Wallet") Color(5, 96, 250)
+                    else Color(0, 0, 0, 0)
+                ))
+            Spacer(Modifier
+                .size(7.dp))
+            Icon(Icons.Default.ShoppingCart,"",Modifier
+                .clickable{navController.navigate("Wallet")})
+            Text(text = "Wallet",
+                color = if (currentRoute=="Wallet") Color(5,96,250)
+                else Color(205,205,205,205))
+        }
+        Column (Modifier
+            .fillMaxHeight(),horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "", Modifier
+                .padding(0.dp, 3.dp, 0.dp, 0.dp)
+                .height(3.dp)
+                .width(40.dp)
+                .background(
+                    if (currentRoute == "Track") Color(5, 96, 250)
+                    else Color(0, 0, 0, 0)
+                ))
+            Spacer(Modifier
+                .size(7.dp))
+            Icon(Icons.Default.Notifications,"",Modifier
+                .clickable{navController.navigate("Track")})
+            Text(text = "Track",
+                color = if (currentRoute=="Track") Color(5,96,250)
+                else Color(205,205,205,205))
+        }
+        Column (Modifier
+            .fillMaxHeight(),horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "", Modifier
+                .padding(0.dp, 3.dp, 0.dp, 0.dp)
+                .height(3.dp)
+                .width(40.dp)
+                .background(
+                    if (currentRoute == "Profile") Color(5, 96, 250)
+                    else Color(0, 0, 0, 0)
+                ))
+            Spacer(Modifier
+                .size(7.dp))
+            Icon(Icons.Default.AccountCircle,"",Modifier
+                .clickable{navController.navigate("Profile")})
+            Text(text = "Profile",
+                color = if (currentRoute=="Profile") Color(5,96,250)
+                else Color(205,205,205,205))
+        }
+    }
+}
