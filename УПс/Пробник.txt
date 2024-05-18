@@ -283,3 +283,15 @@ Button(onClick = {},
             shape = RoundedCornerShape(5.dp),     // прямоугольная кнопка
             modifier = Modifier.padding(10.dp)
         ){ Text("Button 1", fontSize = 28.sp) }
+
+
+
+Текст с разными цветами
+Text(
+            buildAnnotatedString {
+                append("By ticking this box, you agree to our ")
+                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = Color(235,188,46))) {
+                    append("Terms and conditions and private policy")
+                }
+            }
+        )
