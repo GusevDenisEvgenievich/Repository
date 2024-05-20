@@ -1,0 +1,27 @@
+using System;
+class HelloWorld {
+  static void Main() {
+        int[] array1 = { 1, 2, 3, 4 };
+        int[] array2 = { 5, 6, 7, 8 };
+        int[] array3 = { 9, 10, 11 };
+        int[] array4 = { 12, 13, 14 };
+        int[,] array3x4 = new int[3, 4] { { 8, 9, 10, 11 }, { 12, 13, 14, 15 }, { 16, 17, 18, 19 } };
+        for (int i = 0; i < 4; i++){
+            Console.Write($"\t{array1[i]}");
+        }
+        Console.WriteLine();
+        for (int i = 0; i < 3; i++){
+            Console.Write($"   {array3[i]}\t");
+            for (int j = 0; j < 4; j++)
+                {
+                    Console.Write($"{array5[i, j]}\t");
+                }
+            Console.Write($"{array4[i]}");
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+        for (int i = 0; i < 4; i++){
+            Console.Write($"\t{array2[i]}");
+        }
+    }
+}
