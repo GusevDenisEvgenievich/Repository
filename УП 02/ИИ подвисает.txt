@@ -1,0 +1,122 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите количество поставщиков:");
+        int m = int.Parse(Console.ReadLine());
+        Console.WriteLine("Введите количество потребителей:");
+        int n = int.Parse(Console.ReadLine());
+
+        // Матрица стоимостей
+        int[,] costs = new int[m, n];
+        // Запасы поставщиков
+        int[] supplies = new int[m];
+        // Спрос потребителей
+        int[] demands = new int[n];
+
+        // Заполнение матрицы стоимостей
+        Console.WriteLine("Введите стоимости перевозок:");
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                costs[i, j] = int.Parse(Console.ReadLine());
+            }
+        }
+
+        // Заполнение запасов поставщиков
+        Console.WriteLine("Введите запасы поставщиков:");
+        for (int i = 0; i < m; i++)
+        {
+            supplies[i] = int.Parse(Console.ReadLine());
+        }
+
+        // Заполнение спроса потребителей
+        Console.WriteLine("Введите спрос потребителей:");
+        for (int j = 0; j < n; j++)
+        {
+            demands[j] = int.Parse(Console.ReadLine());
+        }
+
+        // Решение задачи методом потенциалов
+        var solution = SolveTransportationProblem(costs, supplies, demands);
+
+        // Вывод результатов
+        Console.WriteLine("Решение транспортной задачи:");
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                Console.WriteLine($"Поставщик {i + 1} -> Потребитель {j + 1}: {solution[i, j]}");
+            }
+        }
+    }
+
+    static int[,] SolveTransportationProblem(int[,] costs, int[] supplies, int[] demands)
+    {
+        int m = costs.GetLength(0);
+        int n = costs.GetLength(1);
+        int[,] result = new int[m, n];
+        int[] u = new int[m]; // Потенциалы поставщиков
+        int[] v = new int[n]; // Потенциалы потребителей
+        // Начальное допустимое решение (например, метод северо-западного угла)
+        int i = 0, j = 0;
+        while (i < m && j < n)
+        {
+            if (supplies[i] < demands[j])
+            {
+                result[i, j] = supplies[i];
+                demands[j] -= supplies[i];
+                supplies[i] = 0;
+                i++;
+            }
+            else
+            {
+                result[i, j] = demands[j];
+                supplies[i] -= demands[j];
+                demands[j] = 0;
+                j++;
+            }
+        }
+        // Метод потенциалов
+        bool isOptimal = false;
+        while (!isOptimal)
+        {
+            isOptimal = true;
+            for (i = 0; i < m; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    if (result[i, j] > 0)
+                    {
+                        if (u[i] + v[j] != costs[i, j])
+                        {
+                            u[i] = costs[i, j] - v[j];
+                        }
+                        else
+                        {
+                            v[j] = costs[i, j] - u[i];
+                        }
+                    }
+                }
+            }
+            // Проверка оптимальности
+            for (i = 0; i < m; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    if (result[i, j] == 0 && u[i] + v[j] > costs[i, j])
+                    {
+                        isOptimal = false;
+                        // Выбор клетки (i, j) для перераспределения
+                        // ... (реализация перераспределения)
+                    }
+                }
+            }
+        }
+        return result;
+    }
+}
