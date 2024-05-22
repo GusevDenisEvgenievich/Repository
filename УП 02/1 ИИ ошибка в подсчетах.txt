@@ -1,0 +1,154 @@
+напиши код на си шарп для решения транспортной задачи методом потенциалов с самостоятельным внесением количества поставщиков, остатка, покупателей, спроса. цены
+
+
+
+using System;
+
+class TransportationProblemSolver
+{
+    static int[,] costs;
+    static int[] supply;
+    static int[] demand;
+    static int[,] allocations;
+
+    static void Main()
+    {
+        // Введите количество поставщиков, покупателей, стоимости перевозок
+        Console.WriteLine("Введите количество поставщиков:");
+        int suppliersCount = int.Parse(Console.ReadLine());
+        
+        Console.WriteLine("Введите количество покупателей:");
+        int consumersCount = int.Parse(Console.ReadLine());
+        
+        // Выделите память для стоимостей перевозок и массивов предложения и спроса
+        costs = new int[suppliersCount, consumersCount];
+        supply = new int[suppliersCount];
+        demand = new int[consumersCount];
+
+        // Введите стоимости перевозок
+        Console.WriteLine("Введите стоимости перевозок:");
+        for (int i = 0; i < suppliersCount; i++)
+        {
+            for (int j = 0; j < consumersCount; j++)
+            {
+                Console.Write($"Стоимость от поставщика {i + 1} к покупателю {j + 1}: ");
+                costs[i, j] = int.Parse(Console.ReadLine());
+            }
+        }
+
+        // Введите предложение (поставки от поставщиков)
+        Console.WriteLine("Введите предложения от каждого поставщика:");
+        for (int i = 0; i < suppliersCount; i++)
+        {
+            Console.Write($"Поставщик {i + 1}: ");
+            supply[i] = int.Parse(Console.ReadLine());
+        }
+
+        // Введите спрос (требования покупателей)
+        Console.WriteLine("Введите спрос от каждого покупателя:");
+        for (int i = 0; i < consumersCount; i++)
+        {
+            Console.Write($"Покупатель {i + 1}: ");
+            demand[i] = int.Parse(Console.ReadLine());
+        }
+
+        // Решите проблему методом потенциалов
+        allocations = SolveTransportationProblem();
+
+        // Выведите результаты
+        Console.WriteLine("\nРезультат:");
+        for (int i = 0; i < suppliersCount; i++)
+        {
+            for (int j = 0; j < consumersCount; j++)
+            {
+                Console.WriteLine($"Поставщик {i + 1} -> Покупатель {j + 1}: {allocations[i, j]}");
+            }
+        }
+    }
+
+    static int[,] SolveTransportationProblem()
+    {
+        int suppliersCount = supply.Length;
+        int consumersCount = demand.Length;
+        int[,] result = new int[suppliersCount, consumersCount];
+
+        while (true)
+        {
+            int[] u = new int[suppliersCount];
+            int[] v = new int[consumersCount];
+            bool[] visitedSuppliers = new bool[suppliersCount];
+            bool[] visitedConsumers = new bool[consumersCount];
+            u[0] = 0;
+            visitedSuppliers[0] = true;
+
+            // Используем метод потенциалов для определения потенциалов
+            while (true)
+            {
+                bool found = false;
+                for (int i = 0; i < suppliersCount; i++)
+                {
+                    if (!visitedSuppliers[i]) continue;
+                    for (int j = 0; j < consumersCount; j++)
+                    {
+                        if (!visitedConsumers[j] && allocations[i, j] > 0)
+                        {
+                            v[j] = costs[i, j] - u[i];
+                            visitedConsumers[j] = true;
+                            found = true;
+                        }
+                    }
+                }
+
+                if (!found) break;
+
+                for (int j = 0; j < consumersCount; j++)
+                {
+                    if (!visitedConsumers[j]) continue;
+                    for (int i = 0; i < suppliersCount; i++)
+                    {
+                        if (!visitedSuppliers[i] && allocations[i, j] > 0)
+                        {
+                            u[i] = costs[i, j] - v[j];
+                            visitedSuppliers[i] = true;
+                        }
+                    }
+                }
+            }
+
+            // Найдите несоответствия и поправьте их
+            int minDelta = int.MaxValue;
+            int minDeltaSupplier = -1;
+            int minDeltaConsumer = -1;
+            for (int i = 0; i < suppliersCount; i++)
+            {
+                for (int j = 0; j < consumersCount; j++)
+                {
+                    if (allocations[i, j] == 0)
+                    {
+                        int delta = costs[i, j] - u[i] - v[j];
+                        if (delta < minDelta)
+                        {
+                            minDelta = delta;
+                            minDeltaSupplier = i;
+                            minDeltaConsumer = j;
+                        }
+                    }
+                }
+            }
+
+            if (minDelta == int.MaxValue)
+            {
+                // Нет несоответствий, завершаем
+                break;
+            }
+
+            // Поправьте несоответствие
+            int minAllocation = Math.Min(supply[minDeltaSupplier], demand[minDeltaConsumer]);
+            result[minDeltaSupplier, minDeltaConsumer] = minAllocation;
+            supply[minDeltaSupplier] -= minAllocation;
+            demand[minDeltaConsumer] -= minAllocation;
+        }
+
+        return result;
+    }
+}
