@@ -19,14 +19,13 @@ namespace ConsoleApplication11
                 else return a;
             }
         }
- 
+        
         static void Main(string[] args)
         {
             int i = 0;
             int j = 0;
-            int n;
             Console.Write("Введите количество поставщиков: ");
-            n = Convert.ToInt32(Console.ReadLine());
+            int n = Convert.ToInt32(Console.ReadLine());
             int[] a = new int[n];
             Console.Write("Введите количество покупателей: ");
             int m = Convert.ToInt32(Console.ReadLine());
@@ -76,25 +75,6 @@ namespace ConsoleApplication11
                 }
                 Console.WriteLine();
             }
-            /*
-            for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < m; j++)
-                {
-                    if (C[i, j].Delivery != 0)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.Write("{0}", C[i, j].Value);
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("({0})", C[i, j].Delivery); 
-                        Console.ResetColor();
-                    }
-                    else
-                        Console.Write("{0}({1})", C[i, j].Value, C[i, j].Delivery);
-                }
-                Console.WriteLine();
-            }
-            */
             int ResultCoast = 0;
             for (i = 0; i < n; i++)
             {
@@ -107,59 +87,103 @@ namespace ConsoleApplication11
             
             
             
-            
             double[] potentialsA = new double[n];
             double[] potentialsB = new double[m];
             bool optimal = false;
             // Инициализация потенциалов
-            for (int i = 0; i < n; i++)
+            for (int q = 0; q < n; q++)
             {
-                potentialsA[i] = 0;
+                potentialsA[q] = 0;
             }
-            for (int j = 0; j < m; j++)
+            for (int w = 0; w < m; w++)
             {
-                potentialsB[j] = 0;
+                potentialsB[w] = 0;
             }
+            
+            // Расчет потенциалов
+                for (int w = 0; w < n; w++)
+                {
+                    for (int e = 0; e < m; e++)
+                    {
+                        if (C[w, e].Delivery != 0)
+                        {
+                            if (potentialsA[w] == 0)
+                            {
+                                potentialsA[w] = C[w, e].Value - potentialsB[e];
+                            }
+                            else
+                            {
+                                potentialsB[e] = C[w, e].Value - potentialsA[w];
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine("Расчет");
+            
+            //вывод потенциалов
+            for (int q = 0; q < n; q++)
+            {
+                Console.Write($"\t{potentialsA[q]}");
+            }
+            for (int w = 0; w < m; w++)
+            {
+                Console.Write($"\t{potentialsB[w]}");
+            }
+            Console.WriteLine();
+            
+            /*
             while (!optimal)
             {
                 optimal = true;
                 // Расчет потенциалов
-                for (int i = 0; i < n; i++)
+                for (int w = 0; w < n; w++)
                 {
-                    for (int j = 0; j < m; j++)
+                    for (int e = 0; e < m; e++)
                     {
-                        if (C[i, j].Delivery != 0)
+                        if (C[w, e].Delivery != 0)
                         {
-                            if (potentialsA[i] == 0)
+                            if (potentialsA[w] == 0)
                             {
-                                potentialsA[i] = C[i, j].Value - potentialsB[j];
+                                potentialsA[w] = C[w, e].Value - potentialsB[e];
                             }
                             else
                             {
-                                potentialsB[j] = C[i, j].Value - potentialsA[i];
+                                potentialsB[e] = C[w, e].Value - potentialsA[w];
                             }
                         }
                     }
                 }
+                Console.WriteLine("Расчет");
+                 optimal = false;
                 // Проверка условий оптимальности
-                for (int i = 0; i < n; i++)
+                for (int w = 0; w < n; w++)
                 {
-                    for (int j = 0; j < m; j++)
+                    for (int e = 0; e < m; e++)
                     {
-                        if (C[i, j].Delivery == 0)
+                        if (C[w, e].Delivery == 0)
                         {
-                            if (potentialsA[i] + potentialsB[j] - C[i, j].Value > 0)
+                            if (potentialsA[w] + potentialsB[e] - C[w, e].Value > 0)
                             {
                                 optimal = false;
                                 // Найти цикл и пересчитать план перевозок
                                 // ...
+                                for (int r = 0; r < n; r++)
+                                {
+                                    for (int t = 0; t < m; t++)
+                                    {
+                                        ResultCoast += (C[r, t].Value * C[r, t].Delivery);
+                                    }
+                                }
+                                Console.WriteLine("Перерасчет");
                             }
                         }
                     }
                 }
             }
+            */
             // Вывод результатов
             Console.WriteLine("Затраты на доставку после оптимизации методом потенциалов: {0}", ResultCoast);
+            Console.WriteLine("Конец");
         }
     }
 }
