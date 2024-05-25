@@ -87,47 +87,112 @@ namespace ConsoleApplication11
             
             
             
-            double[] potentialsA = new double[n];
-            double[] potentialsB = new double[m];
+            string[] potentialsA = new string[n];
+            string[] potentialsB = new string[m];
+            int[,] freecells = new int[n,m];
             bool optimal = false;
+            
             // Инициализация потенциалов
             for (int q = 0; q < n; q++)
             {
-                potentialsA[q] = 0;
+                potentialsA[q] = "";
             }
             for (int w = 0; w < m; w++)
             {
-                potentialsB[w] = 0;
+                potentialsB[w] = "";
             }
             
-            // Расчет потенциалов
-                for (int w = 0; w < n; w++)
+            for (int w = 0; w < n; w++)
+            {
+                for (int e = 0; e < m; e++)
                 {
-                    for (int e = 0; e < m; e++)
+                    Console.Write($"\t{C[w, e].Delivery}");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            for (int w = 0; w < n; w++)
+            {
+                for (int e = 0; e < m; e++)
+                {
+                    Console.Write($"\t{C[w, e].Value}");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            for (int e = 0; e < n; e++)
+            {
+                Console.Write($"\t{potentialsA[e]}");
+            }
+            Console.WriteLine();
+            for (int e = 0; e < m; e++)
+            {
+                Console.Write($"\t{potentialsB[e]}");
+            }
+            Console.WriteLine();
+            
+            // Расчет потенциалов
+            for (int w = 0; w < n; w++)
+            {
+                for (int e = 0; e < m; e++)
+                {
+                    if (C[w, e].Delivery != 0)
                     {
-                        if (C[w, e].Delivery != 0)
+                        if (potentialsA[w] == "")
                         {
-                            if (potentialsA[w] == 0)
+                            if (w == 0 && e == 0)
                             {
-                                potentialsA[w] = C[w, e].Value - potentialsB[e];
+                                potentialsA[w] = "0";
+                                potentialsB[e] = (C[w, e].Value - int.Parse(potentialsA[w])).ToString();
                             }
                             else
                             {
-                                potentialsB[e] = C[w, e].Value - potentialsA[w];
+                                potentialsA[w] = (C[w, e].Value - int.Parse(potentialsB[e])).ToString();
+                                Console.WriteLine($"{C[w, e].Value} - {potentialsB[e]} = {potentialsA[w]}   1");
                             }
+                        }
+                        if (potentialsB[e] == "")
+                        {
+                            potentialsB[e] = (C[w, e].Value - int.Parse(potentialsA[w])).ToString();
+                            Console.WriteLine($"{C[w, e].Value} - {potentialsA[w]} = {potentialsB[e]}   2");
                         }
                     }
                 }
-                Console.WriteLine("Расчет");
+            }
+            Console.WriteLine("Расчет1");
             
-            //вывод потенциалов
+            // Расчет свободных клеток
+            for (int w = 0; w < n; w++)
+            {
+                for (int e = 0; e < m; e++)
+                {
+                    if (C[w, e].Delivery == 0)
+                    {
+                        freecells[w,e] = int.Parse(potentialsA[w]) + int.Parse(potentialsB[e]) - C[w, e].Value;
+                    }
+                }
+            }
+            Console.WriteLine("Расчет2");
+            
+            // Вывод потенциалов
             for (int q = 0; q < n; q++)
             {
                 Console.Write($"\t{potentialsA[q]}");
             }
+            Console.WriteLine();
             for (int w = 0; w < m; w++)
             {
                 Console.Write($"\t{potentialsB[w]}");
+            }
+            Console.WriteLine();
+            // Вывод свободных клеток
+            for (int q = 0; q < n; q++)
+            {
+                for (int w = 0; w < m; w++)
+                {
+                    Console.Write($"\t{freecells[q,w]}");
+                }
+                Console.WriteLine();
             }
             Console.WriteLine();
             
@@ -182,8 +247,12 @@ namespace ConsoleApplication11
             }
             */
             // Вывод результатов
-            Console.WriteLine("Затраты на доставку после оптимизации методом потенциалов: {0}", ResultCoast);
-            Console.WriteLine("Конец");
+            int max=0;
+            foreach (int cell in freecells) 
+            { 
+                if (cell > max) max = cell;
+            }
+            Console.WriteLine($"Наибольшая оценка {max}");
         }
     }
 }
