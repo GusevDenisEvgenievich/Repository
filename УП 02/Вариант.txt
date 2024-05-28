@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
- 
+
 namespace ConsoleApplication11
 {
     class Program
@@ -82,6 +82,7 @@ namespace ConsoleApplication11
                 for (j = 0; j < m; j++)
                 {
                     Console.Write($"\t{C[i, j].Delivery}");
+                    ResultCoast += (C[i, j].Value * C[i, j].Delivery);
                 }
                 Console.Write($"\t{copieda[i]}");
                 Console.WriteLine();
@@ -89,14 +90,6 @@ namespace ConsoleApplication11
             for (int e = 0; e < m; e++)
             {
                 Console.Write($"\t{copiedb[e]}");
-            }
-            
-            for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < m; j++)
-                {
-                    ResultCoast += (C[i, j].Value * C[i, j].Delivery);
-                }
             }
             Console.WriteLine("\nЗатраты на доставку: {0}\n", ResultCoast);
             
@@ -110,7 +103,6 @@ namespace ConsoleApplication11
             {
                 potentialsB[w] = "";
             }
-            
             for (int w = 0; w < n; w++)
             {
                 for (int e = 0; e < m; e++)
@@ -173,7 +165,7 @@ namespace ConsoleApplication11
                 }
             }
             
-            Console.WriteLine("\nОценка свободных клеток");
+            Console.WriteLine("\nОценка свободных клеток:");
             Console.Write($"\t\t");
             for (int e = 0; e < m; e++)
             {
