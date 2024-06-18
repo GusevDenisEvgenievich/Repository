@@ -1,0 +1,102 @@
+import flet as ft
+import psycopg2 
+
+def main (page: ft.Page):
+    personal_account = ft.TextField(label="Номер л/с", autofocus=True)
+    res = list()
+
+    def search (e):
+      connection = psycopg2.connect(
+        host = "127.0.0.1",
+        user = "postgres",
+        password = "12345",
+        database = "water")
+      connection.autocommit = True
+      with connection.cursor() as cursor:
+        cursor.execute(f"select * from meter_data where account = {personal_account.value}")
+        res = cursor.fetchall()
+        if res == None:
+            page.snack_bar = ft.SnackBar(ft.Text('Неправильный л/с'))
+        else:
+            page.clean()
+            page.add(page_meters)
+            page.add(ft.Row(
+               [
+                  ft.Column(
+                     [
+                        ft.Container(
+                           content = ft.Text('Номер прибора учета'),
+                           alignment=ft.alignment.center,
+                           height = 50,
+                           width = 150
+                        )
+                     ] + [
+                        ft.Container(
+                           content = ft.Text(f'{row[1]}'),
+                           alignment=ft.alignment.center,
+                           height = 50,
+                           width = 150
+                        ) for row in res
+                     ]
+                  ),
+                  ft.Column(
+                     [
+                        ft.Container(
+                           content = ft.Text('Последние показания'),
+                           alignment=ft.alignment.center,
+                           height = 50,
+                           width = 150
+                        )
+                     ] + [
+                        ft.Container(
+                           content = ft.Text(f'{row[2]}'),
+                           alignment=ft.alignment.center,
+                           height = 50,   
+                           width = 150
+                        ) for row in res
+                     ]
+                  ),
+                  ft.Column(
+                     [
+                        ft.Container(
+                           content = ft.Text('Новые показания'),
+                           alignment=ft.alignment.center,
+                           height = 50,
+                           width = 150
+                        )
+                     ] + [
+                        ft.Container(
+                           content = ft.TextField(''),
+                           alignment=ft.alignment.center,
+                           height = 50,   
+                           width = 150
+                        ) for row in res
+                     ]
+                  )
+               ]
+            ))
+
+    page.title = "Приложение"
+    page.theme_mode = 'light'
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page_meters = ft.Column([
+       ft.Row(
+            [
+                ft.Text('Передача показаний', size = 25)
+            ],
+            alignment = ft.MainAxisAlignment.CENTER
+        ),
+        ft.Row(
+            [
+                personal_account,
+                ft.OutlinedButton(
+                     'Поиск',
+                     on_click = search
+                )
+            ]
+        ),
+    ])
+    
+    page.add(page_meters)
+    
+ft.app(target = main)
