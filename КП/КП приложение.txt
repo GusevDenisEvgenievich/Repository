@@ -1,0 +1,334 @@
+<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" >
+    <TextBlock Text="Авторизация" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+    <TextBox Name="textBoxUser" Height="25" Margin="0,0,0,10" GotFocus="RemoveText" LostFocus="AddText" Tag="Пользователь" Text="Пользователь"/>
+    <TextBox Name="textBoxPassword" Height="23"  Margin="0,0,0,10" TextWrapping="Wrap" GotFocus="RemoveText" LostFocus="AddText" Tag="Пароль" Text="Пароль"/>
+    <Button Content="Войти" Background="DodgerBlue" Foreground="White" Width="100" Padding="10" Margin="0,10,0,0" Click="AuthorizationCheck"/>
+</StackPanel>
+
+public void RemoveText(object sender, EventArgs e)
+{
+    TextBox instance = (TextBox)sender;
+    if (instance.Text == instance.Tag.ToString())
+        instance.Text = "";
+}
+
+public void AddText(object sender, EventArgs e)
+{
+    TextBox instance = (TextBox)sender;
+    if (string.IsNullOrWhiteSpace(instance.Text))
+        instance.Text = instance.Tag.ToString();
+}
+private void AuthorizationCheck(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    StartPage SPage = new StartPage();
+    SPage.Show();
+}
+-----------------------------------
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Margin="0,0,0,10">
+        <TextBlock Text="Hotel Name"  FontWeight="Bold" Margin="10"/>
+        <Button Content="Бронирование" Margin="10" Click="Transition_Resrvation"/>
+        <Button Content="График" Margin="10" Click="Transition_Schedule"/>
+        <Button Content="Сотрудники" Margin="10" Click="Transition_Employees"/>
+    </StackPanel>
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Margin="0,0,0,10" HorizontalAlignment="Right">
+        <Button Content="Авторизоваться" Margin="10" Click="Transition_MainWindow"/>
+        <Button Content="Выход" Margin="10" Click="Close_App"/>
+    </StackPanel>
+
+    <Grid Grid.Row="1">
+        <Grid x:Name="grid" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Бронирование" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="175"/>
+            <WrapPanel x:Name="wrapPanel" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}" Grid.ColumnSpan="2">
+                <TextBlock Text="Персональные данные" HorizontalAlignment="Left" Grid.Row="1" Height="25" Margin="10,10,0,0" VerticalAlignment="Top" Width="130"/>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal" Width="{Binding ActualWidth, ElementName=wrapPanel, Mode=OneWay}">
+                    <TextBox Name="textBoxSurname" Height="25" Margin="10,0,0,0" Width="200" GotFocus="RemoveText" LostFocus="AddText" Tag="Фамилия" Text="Фамилия" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox Name="textBoxName" Height="25" Width="200" GotFocus="RemoveText" LostFocus="AddText" Tag="Имя" Text="Имя" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox Name="textBoxPatronymic" Height="25" Margin="10,0,0,0" Width="200" GotFocus="RemoveText" LostFocus="AddText" Tag="Отчество" Text="Отчество" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal" Width="{Binding ActualWidth, ElementName=wrapPanel, Mode=OneWay}" Margin="0,10,0,0">
+                    <TextBox Name="textBoxPhone" Height="25" Margin="10,10,0,0" Width="200" GotFocus="RemoveText" LostFocus="AddText" Tag="Телефон" Text="Телефон" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBox Name="textBoxMail" Height="25" Margin="10,10,0,10" Width="200" GotFocus="RemoveText" LostFocus="AddText" Tag="Почта" Text="Почта" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </StackPanel>
+            </WrapPanel>
+            <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="2" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}" Grid.ColumnSpan="2">
+                <TextBlock Text="Заезд:" Grid.Row="2" Width="40" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <DatePicker Grid.Row="2" HorizontalAlignment="Center" Height="25" VerticalAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Width="125" Margin="10,0,0,0"/>
+                <TextBlock Text="Выезд:" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" />
+                <DatePicker Grid.Row="2" HorizontalAlignment="Center" Height="25" VerticalAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Width="126" Margin="10,0,0,0"/>
+                <TextBlock Text="Количество мест:" Grid.Row="2" Width="100" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                <TextBox Grid.Row="2" Name="textBox2" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" Width="100" VerticalAlignment="Center" Margin="10,0,0,0" />
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</Grid>
+
+public void RemoveText(object sender, EventArgs e)
+{
+    TextBox instance = (TextBox)sender;
+    if (instance.Text == instance.Tag.ToString())
+        instance.Text = "";
+}
+public void AddText(object sender, EventArgs e)
+{
+    TextBox instance = (TextBox)sender;
+    if (string.IsNullOrWhiteSpace(instance.Text))
+        instance.Text = instance.Tag.ToString();
+}
+private void AuthorizationCheck(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Reservation ReservationForm = new Reservation();
+    ReservationForm.Show();
+}
+private void Transition_Resrvation(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Reservation Reserv = new Reservation();
+    Reserv.Show();
+}
+private void Transition_Schedule(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Schedule Sched = new Schedule();
+    Sched.Show();
+}
+private void Transition_Employees(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Employees Emplo = new Employees();
+    Emplo.Show();
+}
+private void CloseApplication()
+{
+    Application.Current.Shutdown();
+}
+private void Close_App(object sender, RoutedEventArgs e)
+{
+    CloseApplication();
+}
+private void Transition_MainWindow(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Main = new MainWindow();
+    Main.Show();
+}
+-----------------------------
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Margin="0,0,0,10">
+        <TextBlock Text="Hotel Name"  FontWeight="Bold" Margin="10"/>
+        <Button Content="Бронирование" Margin="10" Click="Transition_Resrvation"/>
+        <Button Content="График" Margin="10" Click="Transition_Schedule"/>
+        <Button Content="Сотрудники" Margin="10" Click="Transition_Employees"/>
+    </StackPanel>
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Margin="0,0,0,10" HorizontalAlignment="Right">
+        <Button Content="Авторизоваться" Margin="10" Click="Transition_MainWindow"/>
+        <Button Content="Выход" Margin="10" Click="Close_App"/>
+    </StackPanel>
+
+    <Grid Grid.Row="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Сотрудники" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Content="Сортировка" Width="100" Margin="0,10,0,0" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <ListView x:Name="staffListView" Grid.Row="2" Margin="10" SelectionChanged="staffListView_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ФИО" Width="150" DisplayMemberBinding="{Binding FullName}"/>
+                        <GridViewColumn Header="Должность" Width="100" DisplayMemberBinding="{Binding Position}"/>
+                        <GridViewColumn Header="Дата приема" Width="100" DisplayMemberBinding="{Binding HireDate}"/>
+                        <GridViewColumn Header="Пол" Width="70" DisplayMemberBinding="{Binding Gender}"/>
+                        <GridViewColumn Header="Телефон" Width="100" DisplayMemberBinding="{Binding Phone}"/>
+                        <GridViewColumn Header="Адрес" Width="200" DisplayMemberBinding="{Binding Address}"/>
+                        <GridViewColumn Header="Зарплата" Width="100" DisplayMemberBinding="{Binding Salary}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</Grid>
+
+public void RemoveText(object sender, EventArgs e)
+{
+    TextBox instance = (TextBox)sender;
+    if (instance.Text == instance.Tag.ToString())
+        instance.Text = "";
+}
+public void AddText(object sender, EventArgs e)
+{
+    TextBox instance = (TextBox)sender;
+    if (string.IsNullOrWhiteSpace(instance.Text))
+        instance.Text = instance.Tag.ToString();
+}
+
+private void staffListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+{
+
+}
+private void Transition_Resrvation(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Reservation Reserv = new Reservation();
+    Reserv.Show();
+}
+private void Transition_Schedule(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Schedule Sched = new Schedule();
+    Sched.Show();
+}
+private void Transition_Employees(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Employees Emplo = new Employees();
+    Emplo.Show();
+}
+private void CloseApplication()
+{
+    Application.Current.Shutdown();
+}
+private void Close_App(object sender, RoutedEventArgs e)
+{
+    CloseApplication();
+}
+private void Transition_MainWindow(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Main = new MainWindow();
+    Main.Show();
+}
+-------------------------------
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Margin="0,0,0,10">
+        <TextBlock Text="Hotel Name"  FontWeight="Bold" Margin="10"/>
+        <Button Content="Бронирование" Margin="10" Click="Transition_Resrvation"/>
+        <Button Content="График" Margin="10" Click="Transition_Schedule"/>
+        <Button Content="Сотрудники" Margin="10" Click="Transition_Employees"/>
+    </StackPanel>
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Margin="0,0,0,10" HorizontalAlignment="Right">
+        <Button Content="Авторизоваться" Margin="10" Click="Transition_MainWindow"/>
+        <Button Content="Выход" Margin="10" Click="Close_App"/>
+    </StackPanel>
+
+    <Grid Grid.Row="1">
+        <!-- Main content of the hotel page goes here -->
+    </Grid>
+</Grid>
+
+private void Transition_Resrvation(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Reservation Reserv = new Reservation();
+    Reserv.Show();
+}
+private void Transition_Schedule(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Schedule Sched = new Schedule();
+    Sched.Show();
+}
+private void Transition_Employees(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Employees Emplo = new Employees();
+    Emplo.Show();
+}
+private void CloseApplication()
+{
+    Application.Current.Shutdown();
+}
+private void Close_App(object sender, RoutedEventArgs e)
+{
+    CloseApplication();
+}
+private void Transition_MainWindow(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Main = new MainWindow();
+    Main.Show();
+}
+--------------------------------
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Margin="0,0,0,10">
+        <TextBlock Text="Hotel Name"  FontWeight="Bold" Margin="10"/>
+        <Button Content="Бронирование" Margin="10" Click="Transition_Resrvation"/>
+        <Button Content="График" Margin="10" Click="Transition_Schedule"/>
+        <Button Content="Сотрудники" Margin="10" Click="Transition_Employees"/>
+    </StackPanel>
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Margin="0,0,0,10" HorizontalAlignment="Right">
+        <Button Content="Авторизоваться" Margin="10" Click="Transition_MainWindow"/>
+        <Button Content="Выход" Margin="10" Click="Close_App"/>
+    </StackPanel>
+
+    <Grid Grid.Row="1">
+        <!-- Main content of the hotel page goes here -->
+    </Grid>
+</Grid>
+
+private void Transition_Resrvation(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Reservation Reserv = new Reservation();
+    Reserv.Show();
+}
+private void Transition_Schedule(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Schedule Sched = new Schedule();
+    Sched.Show();
+}
+private void Transition_Employees(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Employees Emplo = new Employees();
+    Emplo.Show();
+}
+private void CloseApplication()
+{
+    Application.Current.Shutdown();
+}
+private void Close_App(object sender, RoutedEventArgs e)
+{
+    CloseApplication();
+}
+private void Transition_MainWindow(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    MainWindow Main = new MainWindow();
+    Main.Show();
+}
