@@ -1,0 +1,46 @@
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <TextBlock Text="Бронироване" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+    <TextBlock Text="Персональные данные" HorizontalAlignment="Left" Grid.Row="1" Height="25" Margin="20,10,0,0" VerticalAlignment="Top" Width="130"/>
+    <TextBox Name="textBoxSurname" Height="25" Margin="20,10,0,0" Width="200" GotFocus="RemoveText" LostFocus="AddText" Tag="Фамилия" Text="Фамилия" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+    <TextBox Name="textBoxName" Height="25" Margin="225,10,0,0" Width="200" GotFocus="RemoveText" LostFocus="AddText" Tag="Имя" Text="Имя" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+    <TextBox Name="textBoxPatronymic" Height="25" Margin="430,10,0,0" Width="200" GotFocus="RemoveText" LostFocus="AddText" Tag="Отчество" Text="Отчество" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+    <TextBox Name="textBoxPhone" Height="25" Margin="20,70,0,0" Width="200" GotFocus="RemoveText" LostFocus="AddText" Tag="Телефон" Text="Телефон" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    <TextBox Name="textBoxMail" Height="25" Margin="225,70,0,0" Width="200" GotFocus="RemoveText" LostFocus="AddText" Tag="Почта" Text="Почта" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    <TextBlock Text="Заезд:" Grid.Row="2" Margin="20,0,0,0" Width="40" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+    <TextBlock Text="Выезд:" Grid.Row="2" Margin="200,0,0,0" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.719,0.605"/>
+    <DatePicker Grid.Row="2" HorizontalAlignment="Left" Margin="65,10,0,10" Height="25" VerticalAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Width="125"/>
+    <DatePicker Grid.Row="2" HorizontalAlignment="Left" Margin="241,0,0,0" Height="25" VerticalAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}"/>
+    <TextBlock Text="Количество мест:" Grid.Row="4" Margin="20"/>
+    <TextBox Grid.Row="4" Name="textBox2" HorizontalAlignment="Left" Height="23"  Margin="150,0,20,0" TextWrapping="Wrap" Width="200" />
+    <Button Content="Забронировать" Grid.Row="5" HorizontalAlignment="Center" Margin="0,20"/>
+
+</Grid>
+
+
+
+public void RemoveText(object sender, EventArgs e)
+{
+    TextBox instance = (TextBox)sender;
+    if (instance.Text == instance.Tag.ToString())
+        instance.Text = "";
+}
+public void AddText(object sender, EventArgs e)
+{
+    TextBox instance = (TextBox)sender;
+    if (string.IsNullOrWhiteSpace(instance.Text))
+        instance.Text = instance.Tag.ToString();
+}
+private void AuthorizationCheck(object sender, RoutedEventArgs e)
+{
+    this.Hide();
+    Reservation ReservationForm = new Reservation();
+    ReservationForm.Show();
+}
