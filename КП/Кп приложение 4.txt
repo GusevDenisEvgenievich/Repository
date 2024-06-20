@@ -1,0 +1,71 @@
+Вот пример разметки XAML для окна с полями ввода данных (фамилия, имя, отчество, должность, дата приёма (от и до), пол (мужской или женский), зарплата (от и до)) и кнопкой закрытия окна:
+
+<Window x:Class="HotelManagement.GroupByWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Group By Criteria" Height="400" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Фамилия, Имя, Отчество -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <TextBox Width="150" Margin="5" PlaceholderText="Фамилия"/>
+            <TextBox Width="150" Margin="5" PlaceholderText="Имя"/>
+            <TextBox Width="150" Margin="5" PlaceholderText="Отчество"/>
+        </StackPanel>
+
+        <!-- Должность -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+            <TextBox Width="150" Margin="5" PlaceholderText="Должность"/>
+        </StackPanel>
+
+        <!-- Дата приёма (от и до) -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+            <DatePicker Width="150" Margin="5" PlaceholderText="Дата приёма от"/>
+            <DatePicker Width="150" Margin="5" PlaceholderText="Дата приёма до"/>
+        </StackPanel>
+
+        <!-- Пол -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10">
+            <ComboBox Width="150" Margin="5" PlaceholderText="Пол">
+                <ComboBoxItem Content="Мужской"/>
+                <ComboBoxItem Content="Женский"/>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Зарплата (от и до) -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10">
+            <TextBox Width="150" Margin="5" PlaceholderText="Зарплата от"/>
+            <TextBox Width="150" Margin="5" PlaceholderText="Зарплата до"/>
+        </StackPanel>
+
+        <!-- Кнопка применить критерии поиска -->
+        <Button Grid.Row="5" Content="Применить" Width="100" Margin="10"/>
+
+        <!-- Кнопка закрыть окно -->
+        <Button Grid.Row="6" Content="Закрыть" Width="100" Margin="10" Click="Close_Click"/>
+    </Grid>
+</Window>
+Обратите внимание на следующие моменты:
+
+StackPanel и Grid: Используются для организации полей ввода в окне.
+TextBox и DatePicker: Для ввода текста и даты соответственно.
+ComboBox: Для выбора пола.
+Button: Два кнопки - одна для применения критериев поиска и другая для закрытия окна.
+Для обработки события нажатия на кнопку "Закрыть" (Click="Close_Click"), необходимо добавить обработчик события в коде C# Вашего окна (GroupByWindow.xaml.cs), чтобы окно закрывалось при нажатии на эту кнопку:
+
+private void Close_Click(object sender, RoutedEventArgs e)
+{
+    this.Close(); // Закрыть текущее окно
+}
+Таким образом, данная разметка предоставляет пользователю поля для ввода критериев поиска и кнопку для их применения, а также кнопку для закрытия окна.
