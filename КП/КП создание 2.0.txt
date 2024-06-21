@@ -95,6 +95,14 @@ CREATE TABLE schedule (
 	end_time TIME
 );
 
+drop table if exists roles cascade;
+CREATE TABLE roles (
+	id INT PRIMARY KEY,
+	employee_id INT REFERENCES employees(id),
+	role_name VARCHAR(100),
+	password VARCHAR(100)
+);
+
 drop table if exists employees cascade;
 CREATE TABLE employees (
 	id INT PRIMARY KEY,
