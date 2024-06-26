@@ -72,6 +72,7 @@ CREATE TABLE history (
 	check_in_data DATE,
 	check_out_data DATE,
 	last_payment DATE,
+	draft numeric(15,2),
 	payment numeric(15,2),
 	debt numeric(15,2),
 	FOREIGN KEY (id) References services_list(id),
