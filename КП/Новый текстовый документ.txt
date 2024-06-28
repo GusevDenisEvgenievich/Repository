@@ -1,0 +1,150 @@
+<Window x:Class="Приложение.Employees"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Приложение"
+        mc:Ignorable="d"
+        Title="Система управления отелем" Height="450" Width="800" Loaded="LoadStaffData">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Margin="0,0,0,10">
+            <TextBlock Text="Hotel Name"  FontWeight="Bold" Margin="10"/>
+            <Button Content="Бронирование" Margin="10" Click="Transition_Resrvation"/>
+            <Button Content="График" Margin="10" Click="Transition_Schedule"/>
+            <Button Content="Сотрудники" Margin="10" Click="Transition_Employees"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Margin="0,0,0,10" HorizontalAlignment="Right">
+            <Button Content="Авторизоваться" Margin="10" Click="Transition_MainWindow"/>
+            <Button Content="Выход" Margin="10" Click="Close_App"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Сотрудники" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button Content="Сортировка" Width="100" Margin="0,10,0,0" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <DataGrid x:Name="staffDataGrid" Grid.Row="2" Margin="10">
+                    <DataGrid.Columns>
+                        
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
+
+
+
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace Приложение
+{
+    /// <summary>
+    /// Логика взаимодействия для Employees.xaml
+    /// </summary>
+    public partial class Employees : Window
+    {
+        public object ConfigurationManager { get; private set; }
+
+        public Employees()
+        {
+            InitializeComponent();
+        }
+        public void RemoveText(object sender, EventArgs e)
+        {
+            TextBox instance = (TextBox)sender;
+            if (instance.Text == instance.Tag.ToString())
+                instance.Text = "";
+        }
+        public void AddText(object sender, EventArgs e)
+        {
+            TextBox instance = (TextBox)sender;
+            if (string.IsNullOrWhiteSpace(instance.Text))
+                instance.Text = instance.Tag.ToString();
+        }
+
+        private void staffListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void Transition_Resrvation(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Reservation Reserv = new Reservation();
+            Reserv.Show();
+        }
+        private void Transition_Schedule(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Schedule Sched = new Schedule();
+            Sched.Show();
+        }
+        private void Transition_Employees(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Employees Emplo = new Employees();
+            Emplo.Show();
+        }
+        private void CloseApplication()
+        {
+            Application.Current.Shutdown();
+        }
+        private void Close_App(object sender, RoutedEventArgs e)
+        {
+            CloseApplication();
+        }
+        private void Transition_MainWindow(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            MainWindow Main = new MainWindow();
+            Main.Show();
+        }
+        private void LoadStaffData(object sender, RoutedEventArgs e)
+        {
+            var cs = "Host=localhost;Username=postgres;Password=12345;Database=curs";
+
+            var con = new NpgsqlConnection(cs);
+            con.Open();
+
+            string sql = "select id as Идентификатор, surname as Фамилия, name as Имя, patronymic as Отчество, post as Должность, corp as Корпус, work_schedule as График, hire_data as Приём, dismissal_data as Увольнение, " +
+                "gender as Пол, phone_number as Телефон, address as Адрес, salary as Зарплата from employees";
+            var cmd = new NpgsqlCommand(sql, con);
+            NpgsqlDataReader rdr = cmd.ExecuteReader();
+
+            DataTable dt = new DataTable();
+            dt.Load(rdr);
+
+            staffDataGrid.ItemsSource = dt.DefaultView;
+
+            con.Close();
+        }
+    }
+}
