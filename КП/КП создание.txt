@@ -1,0 +1,122 @@
+drop table if exists partners cascade;
+CREATE TABLE partners(
+	id INT PRIMARY KEY,
+	organization VARCHAR(150),
+	address VARCHAR(250),
+	email VARCHAR(100)
+);
+ 
+drop table if exists clients cascade;
+CREATE TABLE clients (
+	id INT PRIMARY KEY,
+	surname VARCHAR(100),
+	name VARCHAR(100),
+	patronymic VARCHAR(100),
+	passport VARCHAR(100),
+	birthday DATE,
+	address VARCHAR(200),
+	phone VARCHAR(30),
+	email VARCHAR(100)
+);
+
+drop table if exists hotel cascade;
+CREATE TABLE hotel (
+	id INT PRIMARY KEY,
+	class_hotel VARCHAR(50),
+	number_of_floors INT,
+	rooms_on_floor INT
+);
+
+drop table if exists rooms cascade;
+CREATE TABLE rooms (
+	id INT PRIMARY KEY,
+	capacity Int,
+	price DECIMAL(10, 2),
+	status VARCHAR(20),	
+	building INT REFERENCES hotel (id),
+	client_id INT NULL,
+	booking_id INT Unique
+);
+
+drop table if exists reservations cascade;
+CREATE TABLE reservations (
+	id INT PRIMARY KEY REFERENCES rooms (booking_id),
+	client_id INT,
+	partner_id INT,
+	crop INT,
+	room_number INT,
+	in_data DATE,
+	out_data DATE
+);
+
+drop table if exists services cascade;
+CREATE TABLE services (
+	id INT PRIMARY KEY,
+	name VARCHAR(150),
+	price DECIMAL(15, 2)
+);
+
+drop table if exists services_list cascade;
+CREATE TABLE services_list (
+	id int PRIMARY KEY,
+    	history_id INT,
+    	service_id INT References services(id)
+);
+
+drop table if exists history cascade;
+CREATE TABLE history (
+	id INT PRIMARY KEY,
+	client_id INT References clients(id),
+	partner_id INT null,
+	room_number INT References rooms(id),
+	check_in_data DATE,
+	check_out_data DATE,
+	last_payment DATE,
+	draft numeric(15,2),
+	payment numeric(15,2),
+	debt numeric(15,2),
+	FOREIGN KEY (id) References services_list(id),
+	FOREIGN KEY (partner_id) REFERENCES partners(id)
+);
+
+drop table if exists complaints_list cascade;
+CREATE TABLE complaints_list (
+    	history_id INT UNIQUE PRIMARY KEY References history(id),
+    	data DATE,
+    	description TEXT,
+    	status varchar(50)
+);
+
+drop table if exists schedule cascade;
+CREATE TABLE schedule (
+	id INT PRIMARY KEY,
+	employee_id INT,
+	data DATE,
+	start_time TIME,
+	end_time TIME
+);
+
+drop table if exists employees cascade;
+CREATE TABLE employees (
+	id INT PRIMARY KEY,
+	surname VARCHAR(100),
+	name VARCHAR(100),
+	patronymic VARCHAR(100),
+	post VARCHAR(100),
+	corp INT REFERENCES hotel(id),
+	work_schedule int REFERENCES schedule (id), 
+	hire_data DATE,
+	dismissal_data DATE NULL,
+	gender VARCHAR(20),
+	phone_number VARCHAR(30),
+	address VARCHAR(250),
+	salary INT
+);
+
+drop table if exists roles cascade;
+CREATE TABLE roles (
+	id INT PRIMARY KEY,
+	employee_id INT REFERENCES employees(id),
+	role_name VARCHAR(100),
+	password VARCHAR(100)
+);
