@@ -1,0 +1,9 @@
+C:\Users\student\Desktop\Гусев\kv_ex7_2\kv_ex7_2\obj\Debug\kv_ex7_2.csproj.AssemblyReference.cache
+C:\Users\student\Desktop\Гусев\kv_ex7_2\kv_ex7_2\obj\Debug\kv_ex7_2.csproj.SuggestedBindingRedirects.cache
+C:\Users\student\Desktop\Гусев\kv_ex7_2\kv_ex7_2\obj\Debug\Admin.g.cs
+C:\Users\student\Desktop\Гусев\kv_ex7_2\kv_ex7_2\obj\Debug\Bibl.g.cs
+C:\Users\student\Desktop\Гусев\kv_ex7_2\kv_ex7_2\obj\Debug\Found.g.cs
+C:\Users\student\Desktop\Гусев\kv_ex7_2\kv_ex7_2\obj\Debug\MainWindow.g.cs
+C:\Users\student\Desktop\Гусев\kv_ex7_2\kv_ex7_2\obj\Debug\App.g.cs
+C:\Users\student\Desktop\Гусев\kv_ex7_2\kv_ex7_2\obj\Debug\kv_ex7_2_MarkupCompile.cache
+C:\Users\student\Desktop\Гусев\kv_ex7_2\kv_ex7_2\obj\Debug\kv_ex7_2_MarkupCompile.lref

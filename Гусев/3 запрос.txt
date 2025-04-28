@@ -1,0 +1,2 @@
+select * from video_books
+where in_data is null
