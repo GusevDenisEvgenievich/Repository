@@ -1,0 +1,24 @@
+﻿<Window x:Class="WpfApp1.Otchetnost"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Ремонт оборудования - Авторизация" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Icon="C:\Users\student\Desktop\WpfApp1\WpfApp1\Images\icon.png">
+    <Grid>
+        <Frame Height="450" Width="800" Margin="1,-73,-1,57"/>
+        <Image Source="C:\Users\student\Desktop\WpfApp1\WpfApp1\Images\Logo.png" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
+        <TextBlock Text="Выберите роль:" Margin="275,41,400,358"/>
+        <ComboBox Margin="400,41,275,358" />
+        <TextBlock Text="Логин:" Margin="275,81,400,318"/>
+        <TextBox Margin="400,81,275,318" />
+        <TextBlock Text="Пароль:" Margin="275,121,400,278"/>
+        <PasswordBox Margin="400,121,275,278" />
+        <Button Width="125" Height="35" Margin="10,389,665,10" Content="Регистрация" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Width="125" Height="35" Margin="665,389,10,10" Content="Выход" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Width="125" Height="35" Margin="338,389,338,10" Content="Вход" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</Window>
